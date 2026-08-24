@@ -1,9 +1,13 @@
 <script>
+	import bugUrl from '$lib/assets/bug-solid-full.svg';
 	import calendarUrl from '$lib/assets/calendar-days-solid-full.svg';
+	import githubUrl from '$lib/assets/github-brands-solid-full.svg';
+	import starUrl from '$lib/assets/star-solid-full.svg';
 	import virusUrl from '$lib/assets/viruses-solid-full.svg';
 	import rankingUrl from '$lib/assets/ranking-star-solid-full.svg';
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
 	import DayMark from '$lib/components/DayMark.svelte';
+	import ResponseBtn from '$lib/components/ResponseBtn.svelte';
 	import VEBtn from '$lib/components/VEBtn.svelte';
 
 	const today = new Date();
@@ -38,4 +42,10 @@
 			<AttendanceBar {...counts} />
 		</div>
 	{/each}
+
+	<div class="grid grid-cols-3 gap-4">
+		<ResponseBtn icon={bugUrl} text="Bug report" onclick={() => console.log('bug')} />
+		<ResponseBtn icon={githubUrl} text="Contribute" onclick={() => console.log('contribute')} />
+		<ResponseBtn icon={starUrl} text="Feedback" onclick={() => console.log('feedback')} />
+	</div>
 </main>
