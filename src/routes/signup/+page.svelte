@@ -5,6 +5,7 @@
 	import * as Form from '$lib/components/ui/form/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { genders, signupSchema } from '$lib/schemas.js';
+	import { resolve } from '$app/paths';
 
 	let { data } = $props();
 
@@ -72,6 +73,12 @@
 				{#if $message}
 					<p class="text-center text-sm font-medium text-destructive">{$message}</p>
 				{/if}
+
+				<p class="text-center text-sm text-muted-foreground">
+					Have an account? <a href={resolve('/login')} class="underline underline-offset-4"
+						>Sign in here</a
+					>
+				</p>
 			</form>
 		</Card.Content>
 	</Card.Root>
