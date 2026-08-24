@@ -21,7 +21,7 @@
 	});
 </script>
 
-<Card.Root class={cn(className)} {...restProps}>
+<Card.Root class={cn('transition-colors hover:bg-muted/50', className)} {...restProps}>
 	<Card.Content class="flex flex-col items-center gap-3">
 		<p class="text-sm font-medium">
 			{isToday ? 'Today' : 'Yesterday'}
