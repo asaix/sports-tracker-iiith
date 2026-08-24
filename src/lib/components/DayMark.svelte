@@ -14,12 +14,10 @@
 		...restProps
 	} = $props();
 
-	// Convert date to "Day, DD Mon"
+	// Convert date to the weekday, e.g. "Mon"
 	const formatted = $derived.by(() => {
 		const d = date instanceof Date ? date : new Date(date);
-		const weekday = d.toLocaleDateString('en-GB', { weekday: 'short' });
-		const dayMonth = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-		return `${weekday}, ${dayMonth}`;
+		return d.toLocaleDateString('en-GB', { weekday: 'short' });
 	});
 </script>
 
@@ -32,9 +30,8 @@
 
 		<div class="mt-5 flex gap-5">
 			<Button
-				variant="outline"
 				size="icon"
-				class="fill-current cursor-pointer"
+				class="cursor-pointer bg-[#3A7D44] fill-current text-white hover:bg-[#306738]"
 				aria-label="Mark attended"
 				onclick={onmark}
 			>
@@ -42,9 +39,8 @@
 				{@html checkIcon}
 			</Button>
 			<Button
-				variant="outline"
 				size="icon"
-				class="fill-current cursor-pointer"
+				class="cursor-pointer bg-[#D1495B] fill-current text-white hover:bg-[#AB3C4B]"
 				aria-label="Mark missed"
 				onclick={onskip}
 			>

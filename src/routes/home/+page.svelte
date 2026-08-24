@@ -17,7 +17,7 @@
 <svelte:head><title>Home</title></svelte:head>
 
 <main class="mx-auto flex w-full max-w-md flex-col gap-4 p-4">
-	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+	<div class="grid grid-cols-2 gap-4">
 		<DayMark date={today} />
 		<DayMark isToday={false} date={yesterday} />
 	</div>
