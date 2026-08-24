@@ -21,7 +21,9 @@
 	<Card.Root class="w-full max-w-sm">
 		<Card.Header>
 			<Card.Title>Create an account</Card.Title>
-			<Card.Description>This information is used to uniquely identify you and is not shared publicly.</Card.Description>
+			<Card.Description
+				>This information is used to uniquely identify you and is not shared publicly.</Card.Description
+			>
 		</Card.Header>
 		<Card.Content>
 			<form method="POST" use:enhance class="flex flex-col gap-4">
@@ -68,7 +70,7 @@
 				<Form.Button class="mt-2 w-full">Sign up</Form.Button>
 
 				{#if $message}
-					<p class="text-center text-sm text-muted-foreground">{$message}</p>
+					<p class="text-center text-sm font-medium text-destructive">{$message}</p>
 				{/if}
 			</form>
 		</Card.Content>
