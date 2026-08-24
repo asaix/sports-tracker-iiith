@@ -1,5 +1,9 @@
 <script>
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
+	import DayMark from '$lib/components/DayMark.svelte';
+
+	const today = new Date();
+	const yesterday = new Date(Date.now() - 864e5);
 
 	// placeholder data — swap for real records once the sessions collection exists
 	const sports = [
@@ -13,6 +17,11 @@
 <svelte:head><title>Home</title></svelte:head>
 
 <main class="mx-auto flex w-full max-w-md flex-col gap-4 p-4">
+	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+		<DayMark date={today} />
+		<DayMark isToday={false} date={yesterday} />
+	</div>
+
 	{#each sports as { name, ...counts } (name)}
 		<div>
 			<AttendanceBar {...counts} />
