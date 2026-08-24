@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { message, setError, superValidate } from 'sveltekit-superforms';
 import { zod4 } from 'sveltekit-superforms/adapters';
-import { signupSchema } from './schema.js';
+import { signupSchema } from '$lib/schemas.js';
 
 export async function load({ locals }) {
 	if (locals.user) redirect(303, '/home');
@@ -14,7 +14,7 @@ export const actions = {
 		const form = await superValidate(request, zod4(signupSchema));
 
 		const { username, password, gender } = form.data;
-		form.data.password = ''; 
+		form.data.password = '';
 
 		if (!form.valid) return fail(400, { form });
 
