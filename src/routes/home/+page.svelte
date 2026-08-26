@@ -8,6 +8,8 @@
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
 	import AttendanceLog from '$lib/components/AttendanceLog.svelte';
 	import DayMark from '$lib/components/DayMark.svelte';
+	import ExtraLog from '$lib/components/ExtraLog.svelte';
+	import LeaveLog from '$lib/components/LeaveLog.svelte';
 	import ResponseBtn from '$lib/components/ResponseBtn.svelte';
 	import VEBtn from '$lib/components/VEBtn.svelte';
 
@@ -27,6 +29,26 @@
 	function handleAttendanceChange(entry, status) {
 		// bind: has already written entry.status — this is purely the side-effect hook
 		console.log('attendance changed:', entry.date.toDateString(), '→', status);
+	}
+
+	let extraOpen = $state(false);
+	let leavesOpen = $state(false);
+
+	// dummy data — replace with real records later
+	let extraLog = $state([
+		{ days: 5, reason: 'Inter-college football tournament' },
+		{ days: 2, reason: 'Athletics meet volunteering' },
+		{ days: 1, reason: 'Yoga day' }
+	]);
+
+	let leaveLog = $state([
+		{ days: 3, reason: 'Fever' },
+		{ days: 1, reason: 'Family function' }
+	]);
+
+	function removeFrom(list, entry) {
+		const i = list.indexOf(entry);
+		if (i !== -1) list.splice(i, 1);
 	}
 
 	// placeholder data — swap for real records once the sessions collection exists
@@ -51,11 +73,21 @@
 		entries={attendanceLog}
 		onchange={handleAttendanceChange}
 	/>
+	<ExtraLog
+		bind:open={extraOpen}
+		entries={extraLog}
+		ondelete={(entry) => removeFrom(extraLog, entry)}
+	/>
+	<LeaveLog
+		bind:open={leavesOpen}
+		entries={leaveLog}
+		ondelete={(entry) => removeFrom(leaveLog, entry)}
+	/>
 
 	<div class="grid grid-cols-3 gap-4">
 		<VEBtn icon={calendarUrl} text="Attendance" onclick={() => (attendanceOpen = true)} />
-		<VEBtn icon={rankingUrl} text="Extra" onclick={() => console.log('extra')} />
-		<VEBtn icon={virusUrl} text="Leaves" onclick={() => console.log('leaves')} />
+		<VEBtn icon={rankingUrl} text="Extra" onclick={() => (extraOpen = true)} />
+		<VEBtn icon={virusUrl} text="Leaves" onclick={() => (leavesOpen = true)} />
 	</div>
 
 	{#each sports as { name, ...counts } (name)}
