@@ -31,7 +31,7 @@
 		<div class="flex flex-col gap-3">
 			{#each entries as entry (entry)}
 				<div class="flex items-center gap-4 rounded-2xl bg-muted/50 px-5 py-4">
-					<span class="text-3xl font-semibold tabular-nums">{entry.days}</span>
+					<span class="text-3xl font-semibold tabular-nums">{entry.count}</span>
 					<span class="text-xs text-muted-foreground">|</span>
 					<span class="text-sm">{entry.reason}</span>
 					<Button
@@ -62,8 +62,8 @@
 		<AlertDialog.Header>
 			<AlertDialog.Title>Are you sure?</AlertDialog.Title>
 			<AlertDialog.Description>
-				This will permanently remove “{pending?.reason}” ({pending?.days}
-				{pending?.days === 1 ? 'day' : 'days'}). This cannot be undone.
+				This will permanently remove “{pending?.reason}” ({pending?.count}
+				{pending?.count === 1 ? 'day' : 'days'}). This cannot be undone.
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
