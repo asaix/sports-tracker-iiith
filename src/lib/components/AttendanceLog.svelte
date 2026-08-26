@@ -47,7 +47,7 @@
 						<Table.Cell>
 							<Select.Root
 								type="single"
-								bind:value={entry.status}
+								value={entry.status}
 								onValueChange={(value) => onchange?.(entry, value)}
 							>
 								<Select.Trigger
