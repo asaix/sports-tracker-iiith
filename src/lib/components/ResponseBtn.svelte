@@ -9,7 +9,7 @@
 	variant="secondary"
 	{onclick}
 	class={cn(
-		'h-auto cursor-pointer flex-col gap-2 rounded-full px-5 py-4 shadow-xs border border-gray-200 hover:shadow-sm',
+		'h-auto cursor-pointer flex-col gap-2 rounded-full border border-gray-200 px-5 py-4 shadow-xs hover:shadow-sm',
 		className
 	)}
 	{...restProps}

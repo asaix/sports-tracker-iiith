@@ -21,7 +21,10 @@
 	});
 </script>
 
-<Card.Root class={cn('transition-colors shadow-sm hover:shadow-md hover:bg-muted/50', className)} {...restProps}>
+<Card.Root
+	class={cn('shadow-sm transition-colors hover:bg-muted/50 hover:shadow-md', className)}
+	{...restProps}
+>
 	<Card.Content class="flex flex-col items-center gap-3">
 		<p class="text-sm font-semibold">
 			{isToday ? 'Today' : 'Yesterday'}
@@ -31,7 +34,7 @@
 		<div class="mt-5 flex gap-5">
 			<Button
 				size="icon"
-				class="cursor-pointer shadow-2xs bg-[#3A7D44] transition-transform duration-200 hover:scale-105 fill-current text-white hover:bg-[#306738]"
+				class="cursor-pointer bg-[#3A7D44] fill-current text-white shadow-2xs transition-transform duration-200 hover:scale-105 hover:bg-[#306738]"
 				aria-label="Mark attended"
 				onclick={onmark}
 			>
@@ -40,7 +43,7 @@
 			</Button>
 			<Button
 				size="icon"
-				class="cursor-pointer shadow-2xs bg-[#D1495B] transition-transform duration-200 hover:scale-105 fill-current text-white hover:bg-[#AB3C4B]"
+				class="cursor-pointer bg-[#D1495B] fill-current text-white shadow-2xs transition-transform duration-200 hover:scale-105 hover:bg-[#AB3C4B]"
 				aria-label="Mark missed"
 				onclick={onskip}
 			>
