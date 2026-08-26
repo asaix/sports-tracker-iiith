@@ -6,12 +6,28 @@
 	import virusUrl from '$lib/assets/viruses-solid-full.svg';
 	import rankingUrl from '$lib/assets/ranking-star-solid-full.svg';
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
+	import AttendanceLog from '$lib/components/AttendanceLog.svelte';
 	import DayMark from '$lib/components/DayMark.svelte';
 	import ResponseBtn from '$lib/components/ResponseBtn.svelte';
 	import VEBtn from '$lib/components/VEBtn.svelte';
 
 	const today = new Date();
 	const yesterday = new Date(Date.now() - 864e5);
+
+	let attendanceOpen = $state(false);
+
+	// imaginary data — the last 7 days, newest first
+	let attendanceLog = $state(
+		['Present', 'Absent', 'Present', '-', 'Present', 'Present', 'Absent'].map((status, i) => ({
+			date: new Date(Date.now() - i * 864e5),
+			status
+		}))
+	);
+
+	function handleAttendanceChange(entry, status) {
+		// bind: has already written entry.status — this is purely the side-effect hook
+		console.log('attendance changed:', entry.date.toDateString(), '→', status);
+	}
 
 	// placeholder data — swap for real records once the sessions collection exists
 	const sports = [
@@ -30,9 +46,14 @@
 		<DayMark isToday={false} date={yesterday} />
 	</div>
 
-	<!-- popups not wired up yet -->
+	<AttendanceLog
+		bind:open={attendanceOpen}
+		entries={attendanceLog}
+		onchange={handleAttendanceChange}
+	/>
+
 	<div class="grid grid-cols-3 gap-4">
-		<VEBtn icon={calendarUrl} text="Attendance" onclick={() => console.log('attendance')} />
+		<VEBtn icon={calendarUrl} text="Attendance" onclick={() => (attendanceOpen = true)} />
 		<VEBtn icon={rankingUrl} text="Extra" onclick={() => console.log('extra')} />
 		<VEBtn icon={virusUrl} text="Leaves" onclick={() => console.log('leaves')} />
 	</div>
