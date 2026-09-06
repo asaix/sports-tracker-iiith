@@ -47,7 +47,9 @@
 			{/if}
 		</Dialog.Header>
 
-		<div class="flex flex-col gap-3">
+		<div
+			class="flex max-h-[50vh] scrollbar-none flex-col gap-3 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+		>
 			{#each entries as entry (entry.id)}
 				<div class="flex items-center gap-4 rounded-2xl bg-muted/50 px-5 py-4">
 					<span class="text-3xl font-semibold tabular-nums">{entry.count}</span>
