@@ -1,4 +1,5 @@
 <script>
+	import { deserialize } from '$app/forms';
 	import bugUrl from '$lib/assets/bug-solid-full.svg';
 	import calendarUrl from '$lib/assets/calendar-days-solid-full.svg';
 	import githubUrl from '$lib/assets/github-brands-solid-full.svg';
@@ -12,23 +13,34 @@
 	import LeaveLog from '$lib/components/LeaveLog.svelte';
 	import ResponseBtn from '$lib/components/ResponseBtn.svelte';
 	import VEBtn from '$lib/components/VEBtn.svelte';
+	import { invalidateAll } from '$app/navigation';
+
+
+	let { data } = $props();
 
 	const today = new Date();
 	const yesterday = new Date(Date.now() - 864e5);
 
+
 	let attendanceOpen = $state(false);
 
-	// imaginary data — the last 7 days, newest first
-	let attendanceLog = $state(
-		['Present', 'Absent', 'Present', '-', 'Present', 'Present', 'Absent'].map((status, i) => ({
-			date: new Date(Date.now() - i * 864e5),
-			status
-		}))
-	);
+	let attendanceLogError = $state('');
 
-	function handleAttendanceChange(entry, status) {
-		// bind: has already written entry.status — this is purely the side-effect hook
-		console.log('attendance changed:', entry.date.toDateString(), '→', status);
+	async function handleAttendanceChange(entry, status) {
+		const body = new FormData();
+		body.set('day', entry.day);
+		body.set('status', status);
+		body.set('id', entry.id ?? '');
+
+		const res = await fetch('?/ma', { method: 'POST', body });	
+		const result = deserialize(await res.text());
+
+		if (result.type === 'success'){
+			attendanceLogError =  '';
+			await invalidateAll();
+		}
+		else attendanceLogError = result.data?.message ?? 'Something went wrong.';
+
 	}
 
 	let extraOpen = $state(false);
@@ -58,6 +70,7 @@
 		{ name: 'Badminton', standard: 18, extra: 1, leaves: 1, requirement: 20 },
 		{ name: 'Table Tennis', standard: 4, extra: 0, leaves: 0, requirement: 12 }
 	];
+
 </script>
 
 <svelte:head><title>Home</title></svelte:head>
@@ -70,7 +83,8 @@
 
 	<AttendanceLog
 		bind:open={attendanceOpen}
-		entries={attendanceLog}
+		entries={data.attendanceLog}
+		errormsg = {attendanceLogError}
 		onchange={handleAttendanceChange}
 	/>
 	<ExtraLog
