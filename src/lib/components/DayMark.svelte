@@ -8,6 +8,7 @@
 	let {
 		isToday = true,
 		date = new Date(),
+		status = '-',
 		onpresent,
 		onabsent,
 		class: className,
@@ -19,6 +20,15 @@
 		const d = date instanceof Date ? date : new Date(date);
 		return d.toLocaleDateString('en-GB', { weekday: 'short' });
 	});
+
+	const chosen = $derived(status === 'Present' || status === 'Absent');
+
+	const markClass = (selected, ring) =>
+		cn(
+			'cursor-pointer fill-current text-white shadow-2xs transition-all duration-200 hover:scale-105',
+			selected && `scale-105 ring-2 ring-offset-2 ring-offset-card ${ring}`,
+			chosen && !selected && 'opacity-30 saturate-50 hover:opacity-70'
+		);
 </script>
 
 <Card.Root
@@ -34,8 +44,12 @@
 		<div class="mt-5 flex gap-5">
 			<Button
 				size="icon"
-				class="cursor-pointer bg-[#3A7D44] fill-current text-white shadow-2xs transition-transform duration-200 hover:scale-105 hover:bg-[#306738]"
+				class={cn(
+					'bg-[#3A7D44] hover:bg-[#306738]',
+					markClass(status === 'Present', 'ring-[#3A7D44]')
+				)}
 				aria-label="Mark attended"
+				aria-pressed={status === 'Present'}
 				onclick={onpresent}
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
@@ -43,8 +57,12 @@
 			</Button>
 			<Button
 				size="icon"
-				class="cursor-pointer bg-[#D1495B] fill-current text-white shadow-2xs transition-transform duration-200 hover:scale-105 hover:bg-[#AB3C4B]"
+				class={cn(
+					'bg-[#D1495B] hover:bg-[#AB3C4B]',
+					markClass(status === 'Absent', 'ring-[#D1495B]')
+				)}
 				aria-label="Mark missed"
+				aria-pressed={status === 'Absent'}
 				onclick={onabsent}
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
