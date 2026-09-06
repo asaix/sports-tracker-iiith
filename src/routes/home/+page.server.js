@@ -45,6 +45,7 @@ export async function load({ locals }) {
 	});
 
 	return {
+		username: locals.user.username,
 		attendanceLog: log.reverse(),
 		extra,
 		leave,
@@ -54,6 +55,13 @@ export async function load({ locals }) {
 }
 
 export const actions = {
+	logout: async ({ locals }) => {
+		// hooks.server.js exports the (now empty) authStore to the cookie after
+		// resolve(), which is what actually clears the session in the browser
+		locals.pb.authStore.clear();
+		redirect(303, '/login');
+	},
+
 	ma: async ({ request, locals }) => {
 		// Mark attendance
 		let pb = locals.pb;
@@ -140,7 +148,8 @@ export const actions = {
 		const count = Number(form.get('count'));
 		const reason = String(form.get('reason') ?? '').trim();
 
-		if (!Number.isInteger(count) || count < 1) return fail(400, { message: 'Invalid number of days.' });
+		if (!Number.isInteger(count) || count < 1)
+			return fail(400, { message: 'Invalid number of days.' });
 		if (!reason) return fail(400, { message: 'Please provide a reason.' });
 
 		try {

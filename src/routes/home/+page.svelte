@@ -8,6 +8,7 @@
 	import rankingUrl from '$lib/assets/ranking-star-solid-full.svg';
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
 	import CreditFooter from '$lib/components/CreditFooter.svelte';
+	import Profile from '$lib/components/Profile.svelte';
 	import AttendanceLog from '$lib/components/AttendanceLog.svelte';
 	import BugReport from '$lib/components/BugReport.svelte';
 	import FeedbackForm from '$lib/components/FeedbackForm.svelte';
@@ -57,6 +58,8 @@
 <svelte:head><title>Home</title></svelte:head>
 
 <main class="mx-auto flex min-h-svh flex-col gap-4 p-4 pt-16">
+	<Profile username={data.username} />
+
 	<AttendanceBar
 		standard={data.standard}
 		requirement={data.requirement}
@@ -141,5 +144,8 @@
 		/>
 	</div>
 
-	<CreditFooter class="mb-0.5 mt-auto" people={[{ name: '@asaix', link: 'https://github.com/asaix' }]} />
+	<CreditFooter
+		class="mt-auto mb-0.5"
+		people={[{ name: '@asaix', link: 'https://github.com/asaix' }]}
+	/>
 </main>
