@@ -91,6 +91,7 @@
 		entries={data.leave}
 		errormsg={errors.leave}
 		ondelete={(entry) => callAction('dl', { id: entry.id }, 'leave')}
+		onadd={(fields) => callAction('al', fields, 'leave')}
 	/>
 	<BugReport
 		bind:open={bugOpen}

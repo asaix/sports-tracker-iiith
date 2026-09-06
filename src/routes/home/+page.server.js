@@ -121,10 +121,30 @@ export const actions = {
 
 		const report = String((await request.formData()).get('report') ?? '').trim();
 		if (!report) return fail(400, { message: 'Please describe the bug.' });
-		if (report.length > 20000) return fail(400, { message: 'Please keep the report under 20,000 characters.' });
+		if (report.length > 20000)
+			return fail(400, { message: 'Please keep the report under 20,000 characters.' });
 
 		try {
 			await locals.pb.collection('bugs').create({ user: locals.user.id, report });
+		} catch {
+			return fail(500, { message: 'Failed. Please try again.' });
+		}
+	},
+
+	al: async ({ request, locals }) => {
+		// Add leave
+
+		if (!locals.user) return fail(401, { message: 'Unauthorized' });
+
+		const form = await request.formData();
+		const count = Number(form.get('count'));
+		const reason = String(form.get('reason') ?? '').trim();
+
+		if (!Number.isInteger(count) || count < 1) return fail(400, { message: 'Invalid number of days.' });
+		if (!reason) return fail(400, { message: 'Please provide a reason.' });
+
+		try {
+			await locals.pb.collection('leave').create({ user: locals.user.id, count, reason });
 		} catch {
 			return fail(500, { message: 'Failed. Please try again.' });
 		}
@@ -145,7 +165,11 @@ export const actions = {
 		if (stars === '0' && !feedback) {
 			return fail(400, { message: 'Please leave a rating or a comment.' });
 		}
-		if (feedback.length > 20000) return fail(400, { message: 'Too lengthy 🙄. Please use the bug report form if you want to submit a stack trace.' });
+		if (feedback.length > 20000)
+			return fail(400, {
+				message:
+					'Too lengthy 🙄. Please use the bug report form if you want to submit a stack trace.'
+			});
 
 		try {
 			await locals.pb.collection('feedback').create({ user: locals.user.id, stars, feedback });
