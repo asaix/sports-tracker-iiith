@@ -7,6 +7,7 @@
 	import virusUrl from '$lib/assets/viruses-solid-full.svg';
 	import rankingUrl from '$lib/assets/ranking-star-solid-full.svg';
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
+	import CreditFooter from '$lib/components/CreditFooter.svelte';
 	import AttendanceLog from '$lib/components/AttendanceLog.svelte';
 	import BugReport from '$lib/components/BugReport.svelte';
 	import FeedbackForm from '$lib/components/FeedbackForm.svelte';
@@ -139,4 +140,6 @@
 			onclick={() => (feedbackOpen = true)}
 		/>
 	</div>
+
+	<CreditFooter class="mb-0.5 mt-auto" people={[{ name: '@asaix', link: 'https://github.com/asaix' }]} />
 </main>

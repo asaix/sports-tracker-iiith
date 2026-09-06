@@ -23,6 +23,13 @@ export default defineConfig([
 	},
 
 	{
+		// CreditFooter links out to external sites; resolve() is for internal
+		// routes and would prefix them with the app's base path.
+		files: ['src/lib/components/CreditFooter.svelte'],
+		rules: { 'svelte/no-navigation-without-resolve': ['error', { ignoreLinks: true }] }
+	},
+
+	{
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
 		rules: {}
