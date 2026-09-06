@@ -11,6 +11,7 @@
 		status = '-',
 		onpresent,
 		onabsent,
+		onunmark,
 		class: className,
 		...restProps
 	} = $props();
@@ -29,6 +30,10 @@
 			selected && `scale-105 ring-2 ring-offset-2 ring-offset-card ${ring}`,
 			chosen && !selected && 'opacity-30 saturate-50 hover:opacity-70'
 		);
+
+	// Clicking the highlighted button clears the day instead of re-sending the
+	// same status. Without an `onunmark` handler it is simply a no-op.
+	const press = (mine, mark) => () => (status === mine ? onunmark?.() : mark?.());
 </script>
 
 <Card.Root
@@ -50,7 +55,7 @@
 				)}
 				aria-label="Mark attended"
 				aria-pressed={status === 'Present'}
-				onclick={onpresent}
+				onclick={press('Present', onpresent)}
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
 				{@html checkIcon}
@@ -63,7 +68,7 @@
 				)}
 				aria-label="Mark missed"
 				aria-pressed={status === 'Absent'}
-				onclick={onabsent}
+				onclick={press('Absent', onabsent)}
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
 				{@html xmarkIcon}
