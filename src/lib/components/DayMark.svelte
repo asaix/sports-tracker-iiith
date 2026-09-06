@@ -26,7 +26,7 @@
 
 	const markClass = (selected, ring) =>
 		cn(
-			'cursor-pointer fill-current text-white shadow-2xs transition-all duration-200 hover:scale-105',
+			'cursor-pointer rounded-md fill-current text-white shadow-2xs transition-all duration-200 hover:scale-105',
 			selected && `scale-105 ring-2 ring-offset-2 ring-offset-card ${ring}`,
 			chosen && !selected && 'opacity-30 saturate-50 hover:opacity-70'
 		);
