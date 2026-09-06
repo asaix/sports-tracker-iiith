@@ -1,5 +1,9 @@
 import { fail, redirect } from '@sveltejs/kit';
 
+const MALE_REQUIREMENT = 34;
+const FEMALE_REQUIREMENT = 32;
+const SEMESTER_START = new Date(2026, 7, 1);
+
 export async function load({ locals }) {
 	if (!locals.user) redirect(303, '/login');
 
@@ -8,7 +12,7 @@ export async function load({ locals }) {
 	console.log(pb.authStore.token);
 	console.log(pb.authStore.record.id);
 
-	const SEMESTER_START = new Date(2026, 7, 1);
+    const requirement = locals.user.gender === 'male' ? MALE_REQUIREMENT : FEMALE_REQUIREMENT;
 
 	// attendance log
 	const attendance = await pb.collection('attendance').getFullList({
@@ -40,7 +44,13 @@ export async function load({ locals }) {
 		fields: 'id, count, reason'
 	});
 
-	return { attendanceLog: log.reverse(), extra, leave };
+	return { 
+        attendanceLog: log.reverse(), 
+        extra, 
+        leave,
+        standard: attendance.filter((r) => r.present).length,
+        requirement
+    };
 }
 
 export const actions = {

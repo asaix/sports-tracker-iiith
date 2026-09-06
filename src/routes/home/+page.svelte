@@ -21,6 +21,9 @@
 
 	let errors = $state({ attendance: '', extra: '', leave: '' });
 
+	const extraTotal = $derived(data.extra.reduce((sum, e) => sum + e.count, 0));
+	const leaveTotal = $derived(data.leave.reduce((sum, e) => sum + e.count, 0));
+
 	async function callAction(action, fields, errorKey) {
 		const body = new FormData();
 		for (const [key, value] of Object.entries(fields)) body.set(key, value);
@@ -41,13 +44,6 @@
 	let extraOpen = $state(false);
 	let leavesOpen = $state(false);
 
-	// placeholder data — swap for real records once the sessions collection exists
-	const sports = [
-		{ name: 'Football', standard: 10, extra: 2, leaves: 0, requirement: 15 },
-		{ name: 'Basketball', standard: 6, extra: 0, leaves: 1, requirement: 14 },
-		{ name: 'Badminton', standard: 18, extra: 1, leaves: 1, requirement: 20 },
-		{ name: 'Table Tennis', standard: 4, extra: 0, leaves: 0, requirement: 12 }
-	];
 </script>
 
 <svelte:head><title>Home</title></svelte:head>
@@ -96,11 +92,13 @@
 		<VEBtn icon={virusUrl} text="Leaves" onclick={() => (leavesOpen = true)} />
 	</div>
 
-	{#each sports as { name, ...counts } (name)}
-		<div>
-			<AttendanceBar {...counts} />
-		</div>
-	{/each}
+	<AttendanceBar 
+	
+		standard={data.standard}
+		requirement={data.requirement}
+		extra={extraTotal}
+		leaves={leaveTotal}
+	/>
 
 	<div class="grid grid-cols-3 gap-4">
 		<ResponseBtn icon={bugUrl} text="Bug report" onclick={() => console.log('bug')} />
