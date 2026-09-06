@@ -121,7 +121,7 @@ export const actions = {
 
 		const report = String((await request.formData()).get('report') ?? '').trim();
 		if (!report) return fail(400, { message: 'Please describe the bug.' });
-		if (report.length > 20000) return fail(400, { message: 'That report is too long.' });
+		if (report.length > 20000) return fail(400, { message: 'Please keep the report under 20,000 characters.' });
 
 		try {
 			await locals.pb.collection('bugs').create({ user: locals.user.id, report });
