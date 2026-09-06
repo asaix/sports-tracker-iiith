@@ -128,5 +128,29 @@ export const actions = {
 		} catch {
 			return fail(500, { message: 'Failed. Please try again.' });
 		}
+	},
+
+	fb: async ({ request, locals }) => {
+		// Feedback
+
+		if (!locals.user) return fail(401, { message: 'Unauthorized' });
+
+		const form = await request.formData();
+		const stars = String(form.get('stars') ?? '0');
+		const feedback = String(form.get('feedback') ?? '').trim();
+
+		if (!['0', '1', '2', '3', '4', '5'].includes(stars)) {
+			return fail(400, { message: 'Invalid rating' });
+		}
+		if (stars === '0' && !feedback) {
+			return fail(400, { message: 'Please leave a rating or a comment.' });
+		}
+		if (feedback.length > 20000) return fail(400, { message: 'Too lengthy 🙄. Please use the bug report form if you want to submit a stack trace.' });
+
+		try {
+			await locals.pb.collection('feedback').create({ user: locals.user.id, stars, feedback });
+		} catch {
+			return fail(500, { message: 'Failed. Please try again.' });
+		}
 	}
 };

@@ -9,6 +9,7 @@
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
 	import AttendanceLog from '$lib/components/AttendanceLog.svelte';
 	import BugReport from '$lib/components/BugReport.svelte';
+	import FeedbackForm from '$lib/components/FeedbackForm.svelte';
 	import DayMark from '$lib/components/DayMark.svelte';
 	import ExtraLog from '$lib/components/ExtraLog.svelte';
 	import LeaveLog from '$lib/components/LeaveLog.svelte';
@@ -20,7 +21,7 @@
 
 	let attendanceOpen = $state(false);
 
-	let errors = $state({ attendance: '', extra: '', leave: '', bug: '' });
+	let errors = $state({ attendance: '', extra: '', leave: '', bug: '', feedback: '' });
 
 	const extraTotal = $derived(data.extra.reduce((sum, e) => sum + e.count, 0));
 	const leaveTotal = $derived(data.leave.reduce((sum, e) => sum + e.count, 0));
@@ -47,6 +48,7 @@
 	}
 
 	let bugOpen = $state(false);
+	let feedbackOpen = $state(false);
 	let extraOpen = $state(false);
 	let leavesOpen = $state(false);
 </script>
@@ -95,6 +97,11 @@
 		errormsg={errors.bug}
 		onsubmit={(report) => callAction('br', { report }, 'bug')}
 	/>
+	<FeedbackForm
+		bind:open={feedbackOpen}
+		errormsg={errors.feedback}
+		onsubmit={(fields) => callAction('fb', fields, 'feedback')}
+	/>
 
 	<div class="grid grid-cols-3 gap-4">
 		<VEBtn icon={calendarUrl} text="Attendance" onclick={() => (attendanceOpen = true)} />
@@ -126,7 +133,7 @@
 			icon={starUrl}
 			text="Feedback"
 			class="bg-green-100"
-			onclick={() => console.log('feedback')}
+			onclick={() => (feedbackOpen = true)}
 		/>
 	</div>
 </main>
