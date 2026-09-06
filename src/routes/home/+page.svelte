@@ -117,7 +117,7 @@
 		<VEBtn icon={virusUrl} text="Leaves" onclick={() => (leavesOpen = true)} />
 	</div>
 
-	<div class="mx-auto my-6 h-1.5 w-12 rounded-full bg-border"></div>
+	<div class="mx-auto my-6 h-1.5 w-15 rounded-full bg-color-2"></div>
 
 	<div class="grid grid-cols-3 gap-4">
 		<ResponseBtn

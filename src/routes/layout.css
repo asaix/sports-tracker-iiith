@@ -2,13 +2,14 @@
 @import 'tw-animate-css';
 @import 'shadcn-svelte/tailwind.css';
 @import '@fontsource-variable/figtree';
+@import './palette.css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-	--background: oklch(1 0 0);
+	--background: color-mix(in srgb, var(--color-2) 50%, white);
 	--foreground: oklch(0.145 0 0);
-	--card: oklch(1 0 0);
+	--card: var(--color-1);
 	--card-foreground: oklch(0.145 0 0);
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.145 0 0);

@@ -56,7 +56,7 @@
 					<Button
 						variant="ghost"
 						size="icon-sm"
-						class="ml-auto shrink-0 cursor-pointer fill-muted-foreground hover:fill-[#D1495B]"
+						class="ml-auto shrink-0 cursor-pointer fill-muted-foreground hover:fill-color-3"
 						aria-label="Delete entry"
 						onclick={() => (pending = entry)}
 					>
@@ -94,7 +94,7 @@
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel class="cursor-pointer">Cancel</AlertDialog.Cancel>
 			<AlertDialog.Action
-				class="cursor-pointer bg-[#D1495B] text-white hover:bg-[#AB3C4B]"
+				class="cursor-pointer bg-color-3 text-white hover:bg-color-3/90"
 				onclick={confirmDelete}
 			>
 				Delete

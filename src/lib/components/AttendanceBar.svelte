@@ -15,7 +15,10 @@
 	const total = $derived(standard + extra + leaves);
 </script>
 
-<Card.Root class={cn('w-full ring-0', className)} {...restProps}>
+<Card.Root
+	class={cn('w-full  ring-0', className)}
+	{...restProps}
+>
 	<Card.Content class="flex flex-col gap-3">
 		<p class="text-xl font-medium">{total} / {requirement} done so far</p>
 

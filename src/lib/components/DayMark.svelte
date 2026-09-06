@@ -37,7 +37,7 @@
 </script>
 
 <Card.Root
-	class={cn('shadow-sm transition-colors hover:bg-muted/50 hover:shadow-md', className)}
+	class={cn('shadow-sm ring-0 transition-colors hover:bg-muted/50 hover:shadow-md', className)}
 	{...restProps}
 >
 	<Card.Content class="flex flex-col items-center gap-3">
@@ -50,8 +50,8 @@
 			<Button
 				size="icon"
 				class={cn(
-					'bg-[#3A7D44] hover:bg-[#306738]',
-					markClass(status === 'Present', 'ring-[#3A7D44]')
+					'bg-color-4 hover:bg-color-4/90',
+					markClass(status === 'Present', 'ring-color-4')
 				)}
 				aria-label="Mark attended"
 				aria-pressed={status === 'Present'}
@@ -62,10 +62,7 @@
 			</Button>
 			<Button
 				size="icon"
-				class={cn(
-					'bg-[#D1495B] hover:bg-[#AB3C4B]',
-					markClass(status === 'Absent', 'ring-[#D1495B]')
-				)}
+				class={cn('bg-color-3 hover:bg-color-3/90', markClass(status === 'Absent', 'ring-color-3'))}
 				aria-label="Mark missed"
 				aria-pressed={status === 'Absent'}
 				onclick={press('Absent', onabsent)}

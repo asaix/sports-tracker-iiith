@@ -10,7 +10,7 @@
 <Card.Root
 	{onclick}
 	class={cn(
-		'h-full cursor-pointer shadow-sm transition-all hover:bg-muted/50 hover:shadow-md',
+		'h-full cursor-pointer shadow-sm ring-0 transition-all hover:bg-muted/50 hover:shadow-md',
 		className
 	)}
 	{...restProps}
