@@ -1,6 +1,6 @@
 <script>
+	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import * as Select from '$lib/components/ui/select/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import { cn } from '$lib/utils.js';
 
@@ -13,7 +13,12 @@
 		errormsg = ''
 	} = $props();
 
-	const statuses = ['-', 'Present', 'Absent'];
+	// value sent to the server, letter shown on the button, colour when selected.
+	// Clicking the already-selected one sends '-', which clears the day.
+	const statuses = [
+		{ value: 'Present', label: 'P', selected: 'bg-[#3A7D44] text-white hover:bg-[#306738]' },
+		{ value: 'Absent', label: 'A', selected: 'bg-[#D1495B] text-white hover:bg-[#AB3C4B]' }
+	];
 
 	const asDate = (date) => (date instanceof Date ? date : new Date(date));
 </script>
@@ -32,47 +37,40 @@
 			<Table.Root>
 				<Table.Header class="sticky top-0 z-10 bg-popover">
 					<Table.Row>
-						<Table.Head>Day</Table.Head>
-						<Table.Head>Date</Table.Head>
-						<Table.Head>Present/Absent</Table.Head>
+						<Table.Head class="text-center">Day</Table.Head>
+						<Table.Head class="text-center">Date</Table.Head>
+						<Table.Head class="text-center">Present/Absent</Table.Head>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
 					{#each entries as entry (entry)}
 						<Table.Row>
-							<Table.Cell class="font-medium">
+							<Table.Cell class="text-center font-medium">
 								{asDate(entry.date).toLocaleDateString('en-GB', { weekday: 'short' })}
 							</Table.Cell>
-							<Table.Cell class="text-muted-foreground">
+							<Table.Cell class="text-center text-muted-foreground">
 								{asDate(entry.date).toLocaleDateString('en-GB', {
 									day: '2-digit',
 									month: '2-digit'
 								})}
 							</Table.Cell>
 							<Table.Cell>
-								<Select.Root
-									type="single"
-									value={entry.status}
-									onValueChange={(value) => onchange?.(entry, value)}
-								>
-									<Select.Trigger
-										class={cn(
-											'w-32',
-											'focus-visible:ring-0',
-											entry.status === 'Present' &&
-												'border-transparent bg-[#3A7D44] text-white [&_svg]:text-white',
-											entry.status === 'Absent' &&
-												'border-transparent bg-[#D1495B] text-white [&_svg]:text-white'
-										)}
-									>
-										{entry.status}
-									</Select.Trigger>
-									<Select.Content>
-										{#each statuses as status (status)}
-											<Select.Item value={status} label={status}>{status}</Select.Item>
-										{/each}
-									</Select.Content>
-								</Select.Root>
+								<div class="flex justify-center gap-3">
+									{#each statuses as { value, label, selected } (value)}
+										<Button
+											size="icon-sm"
+											class={cn(
+												'cursor-pointer rounded-full',
+												entry.status === value ? selected : 'bg-muted text-muted-foreground'
+											)}
+											aria-label={value}
+											aria-pressed={entry.status === value}
+											onclick={() => onchange?.(entry, entry.status === value ? '-' : value)}
+										>
+											{label}
+										</Button>
+									{/each}
+								</div>
 							</Table.Cell>
 						</Table.Row>
 					{/each}
