@@ -8,6 +8,7 @@
 	import rankingUrl from '$lib/assets/ranking-star-solid-full.svg';
 	import AttendanceBar from '$lib/components/AttendanceBar.svelte';
 	import AttendanceLog from '$lib/components/AttendanceLog.svelte';
+	import BugReport from '$lib/components/BugReport.svelte';
 	import DayMark from '$lib/components/DayMark.svelte';
 	import ExtraLog from '$lib/components/ExtraLog.svelte';
 	import LeaveLog from '$lib/components/LeaveLog.svelte';
@@ -19,7 +20,7 @@
 
 	let attendanceOpen = $state(false);
 
-	let errors = $state({ attendance: '', extra: '', leave: '' });
+	let errors = $state({ attendance: '', extra: '', leave: '', bug: '' });
 
 	const extraTotal = $derived(data.extra.reduce((sum, e) => sum + e.count, 0));
 	const leaveTotal = $derived(data.leave.reduce((sum, e) => sum + e.count, 0));
@@ -34,13 +35,18 @@
 		if (result.type === 'success') {
 			errors[errorKey] = '';
 			await invalidateAll();
-		} else errors[errorKey] = result.data?.message ?? 'Something went wrong.';
+			return true;
+		}
+
+		errors[errorKey] = result.data?.message ?? 'Something went wrong.';
+		return false;
 	}
 
 	function handleAttendanceChange(entry, status) {
 		return callAction('ma', { day: entry.day, status, id: entry.id ?? '' }, 'attendance');
 	}
 
+	let bugOpen = $state(false);
 	let extraOpen = $state(false);
 	let leavesOpen = $state(false);
 </script>
@@ -84,6 +90,11 @@
 		errormsg={errors.leave}
 		ondelete={(entry) => callAction('dl', { id: entry.id }, 'leave')}
 	/>
+	<BugReport
+		bind:open={bugOpen}
+		errormsg={errors.bug}
+		onsubmit={(report) => callAction('br', { report }, 'bug')}
+	/>
 
 	<div class="grid grid-cols-3 gap-4">
 		<VEBtn icon={calendarUrl} text="Attendance" onclick={() => (attendanceOpen = true)} />
@@ -103,7 +114,7 @@
 			icon={bugUrl}
 			text="Bug report"
 			class="bg-red-100"
-			onclick={() => console.log('bug')}
+			onclick={() => (bugOpen = true)}
 		/>
 		<ResponseBtn
 			icon={githubUrl}

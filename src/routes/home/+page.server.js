@@ -12,7 +12,7 @@ export async function load({ locals }) {
 	console.log(pb.authStore.token);
 	console.log(pb.authStore.record.id);
 
-    const requirement = locals.user.gender === 'male' ? MALE_REQUIREMENT : FEMALE_REQUIREMENT;
+	const requirement = locals.user.gender === 'male' ? MALE_REQUIREMENT : FEMALE_REQUIREMENT;
 
 	// attendance log
 	const attendance = await pb.collection('attendance').getFullList({
@@ -44,13 +44,13 @@ export async function load({ locals }) {
 		fields: 'id, count, reason'
 	});
 
-	return { 
-        attendanceLog: log.reverse(), 
-        extra, 
-        leave,
-        standard: attendance.filter((r) => r.present).length,
-        requirement
-    };
+	return {
+		attendanceLog: log.reverse(),
+		extra,
+		leave,
+		standard: attendance.filter((r) => r.present).length,
+		requirement
+	};
 }
 
 export const actions = {
@@ -111,6 +111,22 @@ export const actions = {
 			await locals.pb.collection('leave').delete(id);
 		} catch {
 			return fail(500, { message: 'Could not delete that record.' });
+		}
+	},
+
+	br: async ({ request, locals }) => {
+		// Bug report
+
+		if (!locals.user) return fail(401, { message: 'Unauthorized' });
+
+		const report = String((await request.formData()).get('report') ?? '').trim();
+		if (!report) return fail(400, { message: 'Please describe the bug.' });
+		if (report.length > 20000) return fail(400, { message: 'That report is too long.' });
+
+		try {
+			await locals.pb.collection('bugs').create({ user: locals.user.id, report });
+		} catch {
+			return fail(500, { message: 'Failed. Please try again.' });
 		}
 	}
 };
