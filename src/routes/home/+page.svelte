@@ -18,10 +18,6 @@
 
 	let { data } = $props();
 
-	const today = new Date();
-	const yesterday = new Date(Date.now() - 864e5);
-
-
 	let attendanceOpen = $state(false);
 
 	let attendanceLogError = $state('');
@@ -77,8 +73,21 @@
 
 <main class="mx-auto flex w-full max-w-md flex-col gap-4 p-4">
 	<div class="grid grid-cols-2 gap-4">
-		<DayMark date={today} />
-		<DayMark isToday={false} date={yesterday} />
+		<DayMark 
+			date={data.attendanceLog[0].date}
+			onpresent={() => handleAttendanceChange(data.attendanceLog[0], 'Present')}
+			onabsent={() => handleAttendanceChange(data.attendanceLog[0], 'Absent')}
+			onunmark={() => handleAttendanceChange(data.attendanceLog[0], '-')}
+			status={data.attendanceLog[0].status}
+		/>
+		<DayMark 
+			date={data.attendanceLog[1].date}
+			onpresent={() => handleAttendanceChange(data.attendanceLog[1], 'Present')}
+			onabsent={() => handleAttendanceChange(data.attendanceLog[1], 'Absent')}
+			onunmark={() => handleAttendanceChange(data.attendanceLog[1], '-')}
+			isToday={false}
+			status={data.attendanceLog[1].status}
+		/>
 	</div>
 
 	<AttendanceLog
