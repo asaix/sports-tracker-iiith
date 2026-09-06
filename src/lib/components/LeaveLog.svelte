@@ -9,7 +9,8 @@
 		title = 'Leaves',
 		description = 'Days excused from your attendance requirement.',
 		entries = [],
-		ondelete
+		ondelete,
+		errormsg = ''
 	} = $props();
 
 	// the entry awaiting confirmation, or null when the confirm dialog is closed
@@ -26,6 +27,9 @@
 		<Dialog.Header>
 			<Dialog.Title>{title}</Dialog.Title>
 			<Dialog.Description>{description}</Dialog.Description>
+			{#if errormsg}
+				<p class="text-sm font-medium text-destructive" role="alert">{errormsg}</p>
+			{/if}
 		</Dialog.Header>
 
 		<div class="flex flex-col gap-3">
