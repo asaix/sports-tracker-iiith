@@ -59,7 +59,6 @@
 
 		<Textarea
 			bind:value={feedback}
-			maxlength={20000}
 			rows={6}
 			placeholder="Anything else you'd like to tell us?"
 			class="max-h-[40vh] overflow-y-auto"

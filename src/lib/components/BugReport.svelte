@@ -38,7 +38,6 @@
 
 		<Textarea
 			bind:value={report}
-			maxlength={20000}
 			rows={6}
 			placeholder="What happened?"
 			class="max-h-[40vh] overflow-y-auto"
