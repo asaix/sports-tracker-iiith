@@ -15,49 +15,31 @@
 	import VEBtn from '$lib/components/VEBtn.svelte';
 	import { invalidateAll } from '$app/navigation';
 
-
 	let { data } = $props();
 
 	let attendanceOpen = $state(false);
 
-	let attendanceLogError = $state('');
+	let errors = $state({ attendance: '', extra: '', leave: '' });
 
-	async function handleAttendanceChange(entry, status) {
+	async function callAction(action, fields, errorKey) {
 		const body = new FormData();
-		body.set('day', entry.day);
-		body.set('status', status);
-		body.set('id', entry.id ?? '');
+		for (const [key, value] of Object.entries(fields)) body.set(key, value);
 
-		const res = await fetch('?/ma', { method: 'POST', body });	
+		const res = await fetch(`?/${action}`, { method: 'POST', body });
 		const result = deserialize(await res.text());
 
-		if (result.type === 'success'){
-			attendanceLogError =  '';
+		if (result.type === 'success') {
+			errors[errorKey] = '';
 			await invalidateAll();
-		}
-		else attendanceLogError = result.data?.message ?? 'Something went wrong.';
+		} else errors[errorKey] = result.data?.message ?? 'Something went wrong.';
+	}
 
+	function handleAttendanceChange(entry, status) {
+		return callAction('ma', { day: entry.day, status, id: entry.id ?? '' }, 'attendance');
 	}
 
 	let extraOpen = $state(false);
 	let leavesOpen = $state(false);
-
-	// dummy data — replace with real records later
-	let extraLog = $state([
-		{ days: 5, reason: 'Inter-college football tournament' },
-		{ days: 2, reason: 'Athletics meet volunteering' },
-		{ days: 1, reason: 'Yoga day' }
-	]);
-
-	let leaveLog = $state([
-		{ days: 3, reason: 'Fever' },
-		{ days: 1, reason: 'Family function' }
-	]);
-
-	function removeFrom(list, entry) {
-		const i = list.indexOf(entry);
-		if (i !== -1) list.splice(i, 1);
-	}
 
 	// placeholder data — swap for real records once the sessions collection exists
 	const sports = [
@@ -66,21 +48,20 @@
 		{ name: 'Badminton', standard: 18, extra: 1, leaves: 1, requirement: 20 },
 		{ name: 'Table Tennis', standard: 4, extra: 0, leaves: 0, requirement: 12 }
 	];
-
 </script>
 
 <svelte:head><title>Home</title></svelte:head>
 
 <main class="mx-auto flex w-full max-w-md flex-col gap-4 p-4">
 	<div class="grid grid-cols-2 gap-4">
-		<DayMark 
+		<DayMark
 			date={data.attendanceLog[0].date}
 			onpresent={() => handleAttendanceChange(data.attendanceLog[0], 'Present')}
 			onabsent={() => handleAttendanceChange(data.attendanceLog[0], 'Absent')}
 			onunmark={() => handleAttendanceChange(data.attendanceLog[0], '-')}
 			status={data.attendanceLog[0].status}
 		/>
-		<DayMark 
+		<DayMark
 			date={data.attendanceLog[1].date}
 			onpresent={() => handleAttendanceChange(data.attendanceLog[1], 'Present')}
 			onabsent={() => handleAttendanceChange(data.attendanceLog[1], 'Absent')}
@@ -93,18 +74,20 @@
 	<AttendanceLog
 		bind:open={attendanceOpen}
 		entries={data.attendanceLog}
-		errormsg = {attendanceLogError}
+		errormsg={errors.attendance}
 		onchange={handleAttendanceChange}
 	/>
 	<ExtraLog
 		bind:open={extraOpen}
-		entries={extraLog}
-		ondelete={(entry) => removeFrom(extraLog, entry)}
+		entries={data.extra}
+		errormsg={errors.extra}
+		ondelete={(entry) => callAction('de', { id: entry.id }, 'extra')}
 	/>
 	<LeaveLog
 		bind:open={leavesOpen}
-		entries={leaveLog}
-		ondelete={(entry) => removeFrom(leaveLog, entry)}
+		entries={data.leave}
+		errormsg={errors.leave}
+		ondelete={(entry) => callAction('dl', { id: entry.id }, 'leave')}
 	/>
 
 	<div class="grid grid-cols-3 gap-4">
