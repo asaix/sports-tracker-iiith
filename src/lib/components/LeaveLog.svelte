@@ -47,7 +47,7 @@
 		</Dialog.Header>
 
 		<div class="flex flex-col gap-3">
-			{#each entries as entry (entry)}
+			{#each entries as entry (entry.id)}
 				<div class="flex items-center gap-4 rounded-2xl bg-muted/50 px-5 py-4">
 					<span class="text-3xl font-semibold tabular-nums">{entry.count}</span>
 					<span class="text-xs text-muted-foreground">|</span>

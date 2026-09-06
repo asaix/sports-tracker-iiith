@@ -43,7 +43,7 @@
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
-					{#each entries as entry (entry)}
+					{#each entries as entry (entry.day)}
 						<Table.Row>
 							<Table.Cell class="text-center font-medium">
 								{asDate(entry.date).toLocaleDateString('en-GB', { weekday: 'short' })}
