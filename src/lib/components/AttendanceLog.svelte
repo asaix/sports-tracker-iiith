@@ -9,7 +9,8 @@
 		title = 'Past Attendance',
 		description = 'View and update your records here.',
 		entries = [],
-		onchange
+		onchange,
+		errormsg = ''
 	} = $props();
 
 	const statuses = ['-', 'Present', 'Absent'];
@@ -22,6 +23,9 @@
 		<Dialog.Header>
 			<Dialog.Title>{title}</Dialog.Title>
 			<Dialog.Description>{description}</Dialog.Description>
+			{#if errormsg}
+				<p class="text-sm font-medium text-destructive" role="alert">{errormsg}</p>
+			{/if}
 		</Dialog.Header>
 
 		<div class="max-h-[60vh] scrollbar-none overflow-y-auto [&::-webkit-scrollbar]:hidden">
