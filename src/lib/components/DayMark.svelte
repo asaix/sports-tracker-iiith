@@ -8,8 +8,8 @@
 	let {
 		isToday = true,
 		date = new Date(),
-		onmark,
-		onskip,
+		onpresent,
+		onabsent,
 		class: className,
 		...restProps
 	} = $props();
@@ -36,7 +36,7 @@
 				size="icon"
 				class="cursor-pointer bg-[#3A7D44] fill-current text-white shadow-2xs transition-transform duration-200 hover:scale-105 hover:bg-[#306738]"
 				aria-label="Mark attended"
-				onclick={onmark}
+				onclick={onpresent}
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
 				{@html checkIcon}
@@ -45,7 +45,7 @@
 				size="icon"
 				class="cursor-pointer bg-[#D1495B] fill-current text-white shadow-2xs transition-transform duration-200 hover:scale-105 hover:bg-[#AB3C4B]"
 				aria-label="Mark missed"
-				onclick={onskip}
+				onclick={onabsent}
 			>
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
 				{@html xmarkIcon}
