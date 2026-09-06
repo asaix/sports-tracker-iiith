@@ -55,7 +55,13 @@
 
 <svelte:head><title>Home</title></svelte:head>
 
-<main class="mx-auto flex w-full max-w-md flex-col gap-4 p-4">
+<main class="mx-auto flex min-h-svh flex-col gap-4 p-4 pt-16">
+	<AttendanceBar
+		standard={data.standard}
+		requirement={data.requirement}
+		extra={extraTotal}
+		leaves={leaveTotal}
+	/>
 	<div class="grid grid-cols-2 gap-4">
 		<DayMark
 			date={data.attendanceLog[0].date}
@@ -111,12 +117,7 @@
 		<VEBtn icon={virusUrl} text="Leaves" onclick={() => (leavesOpen = true)} />
 	</div>
 
-	<AttendanceBar
-		standard={data.standard}
-		requirement={data.requirement}
-		extra={extraTotal}
-		leaves={leaveTotal}
-	/>
+	<div class="mx-auto my-6 h-1.5 w-12 rounded-full bg-border"></div>
 
 	<div class="grid grid-cols-3 gap-4">
 		<ResponseBtn
