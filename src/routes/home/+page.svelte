@@ -43,7 +43,6 @@
 
 	let extraOpen = $state(false);
 	let leavesOpen = $state(false);
-
 </script>
 
 <svelte:head><title>Home</title></svelte:head>
@@ -92,8 +91,7 @@
 		<VEBtn icon={virusUrl} text="Leaves" onclick={() => (leavesOpen = true)} />
 	</div>
 
-	<AttendanceBar 
-	
+	<AttendanceBar
 		standard={data.standard}
 		requirement={data.requirement}
 		extra={extraTotal}
@@ -101,8 +99,23 @@
 	/>
 
 	<div class="grid grid-cols-3 gap-4">
-		<ResponseBtn icon={bugUrl} text="Bug report" onclick={() => console.log('bug')} />
-		<ResponseBtn icon={githubUrl} text="Contribute" onclick={() => console.log('contribute')} />
-		<ResponseBtn icon={starUrl} text="Feedback" onclick={() => console.log('feedback')} />
+		<ResponseBtn
+			icon={bugUrl}
+			text="Bug report"
+			class="bg-red-100"
+			onclick={() => console.log('bug')}
+		/>
+		<ResponseBtn
+			icon={githubUrl}
+			text="Contribute"
+			class="bg-blue-100"
+			onclick={() => console.log('contribute')}
+		/>
+		<ResponseBtn
+			icon={starUrl}
+			text="Feedback"
+			class="bg-green-100"
+			onclick={() => console.log('feedback')}
+		/>
 	</div>
 </main>
