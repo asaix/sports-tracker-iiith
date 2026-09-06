@@ -3,6 +3,7 @@
 	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import { Input } from '$lib/components/ui/input/index.js';
 
 	let {
 		open = $bindable(false),
@@ -10,8 +11,22 @@
 		description = 'Sessions credited on top of your regular attendance.',
 		entries = [],
 		ondelete,
+		onadd,
 		errormsg = ''
 	} = $props();
+
+	let count = $state(1);
+	let reason = $state('');
+
+	// onadd should resolve truthy on success, so input is kept if the save fails
+	async function add() {
+		if (!reason.trim()) return;
+
+		if (await onadd?.({ count: String(count), reason: reason.trim() })) {
+			count = 1;
+			reason = '';
+		}
+	}
 
 	// the entry awaiting confirmation, or null when the confirm dialog is closed
 	let pending = $state(null);
@@ -52,6 +67,12 @@
 			{:else}
 				<p class="py-6 text-center text-sm text-muted-foreground">No extra credits yet.</p>
 			{/each}
+		</div>
+
+		<div class="flex gap-2">
+			<Input type="number" min="1" bind:value={count} class="w-20" aria-label="Days" />
+			<Input bind:value={reason} placeholder="Reason" />
+			<Button class="cursor-pointer" disabled={!reason.trim()} onclick={add}>Add</Button>
 		</div>
 	</Dialog.Content>
 </Dialog.Root>

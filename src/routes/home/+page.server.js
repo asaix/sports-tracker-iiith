@@ -131,6 +131,25 @@ export const actions = {
 		}
 	},
 
+	ae: async ({ request, locals }) => {
+		// Add extra
+
+		if (!locals.user) return fail(401, { message: 'Unauthorized' });
+
+		const form = await request.formData();
+		const count = Number(form.get('count'));
+		const reason = String(form.get('reason') ?? '').trim();
+
+		if (!Number.isInteger(count) || count < 1) return fail(400, { message: 'Invalid number of days.' });
+		if (!reason) return fail(400, { message: 'Please provide a reason.' });
+
+		try {
+			await locals.pb.collection('extra').create({ user: locals.user.id, count, reason });
+		} catch {
+			return fail(500, { message: 'Failed. Please try again.' });
+		}
+	},
+
 	al: async ({ request, locals }) => {
 		// Add leave
 
@@ -140,7 +159,8 @@ export const actions = {
 		const count = Number(form.get('count'));
 		const reason = String(form.get('reason') ?? '').trim();
 
-		if (!Number.isInteger(count) || count < 1) return fail(400, { message: 'Invalid number of days.' });
+		if (!Number.isInteger(count) || count < 1)
+			return fail(400, { message: 'Invalid number of days.' });
 		if (!reason) return fail(400, { message: 'Please provide a reason.' });
 
 		try {

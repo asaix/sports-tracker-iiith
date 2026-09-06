@@ -85,6 +85,7 @@
 		entries={data.extra}
 		errormsg={errors.extra}
 		ondelete={(entry) => callAction('de', { id: entry.id }, 'extra')}
+		onadd={(fields) => callAction('ae', fields, 'extra')}
 	/>
 	<LeaveLog
 		bind:open={leavesOpen}
