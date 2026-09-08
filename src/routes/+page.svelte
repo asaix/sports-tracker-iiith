@@ -134,7 +134,12 @@
 			icon={githubUrl}
 			text="Contribute"
 			class="bg-blue-100"
-			onclick={() => console.log('contribute')}
+			onclick={() =>
+				window.open(
+					'https://github.com/asaix/sports-tracker-iiith',
+					'_blank',
+					'noopener,noreferrer'
+				)}
 		/>
 		<ResponseBtn
 			icon={starUrl}
