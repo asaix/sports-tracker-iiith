@@ -4,7 +4,7 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { loginSchema } from '$lib/schemas.js';
 
 export async function load({ locals }) {
-	if (locals.user) redirect(303, '/home');
+	if (locals.user) redirect(303, '/');
 
 	return { form: await superValidate(zod4(loginSchema)) };
 }
@@ -25,6 +25,6 @@ export const actions = {
 			return message(form, 'Incorrect username or password.', { status: 401 });
 		}
 
-		redirect(303, '/home');
+		redirect(303, '/');
 	}
 };

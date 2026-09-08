@@ -4,7 +4,7 @@ import { zod4 } from 'sveltekit-superforms/adapters';
 import { signupSchema } from '$lib/schemas.js';
 
 export async function load({ locals }) {
-	if (locals.user) redirect(303, '/home');
+	if (locals.user) redirect(303, '/');
 
 	return { form: await superValidate(zod4(signupSchema)) };
 }
@@ -33,6 +33,6 @@ export const actions = {
 			return message(form, 'Could not create the account. Please try again.', { status: 500 });
 		}
 
-		redirect(303, '/home');
+		redirect(303, '/');
 	}
 };
