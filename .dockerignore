@@ -1,0 +1,7 @@
+.git
+.svelte-kit
+build
+node_modules
+pb_data
+pocketbase.exe
+TODO.txt
