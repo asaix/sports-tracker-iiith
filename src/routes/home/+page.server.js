@@ -8,9 +8,6 @@ export async function load({ locals }) {
 	if (!locals.user) redirect(303, '/login');
 
 	var pb = locals.pb;
-	console.log(pb.authStore.isValid);
-	console.log(pb.authStore.token);
-	console.log(pb.authStore.record.id);
 
 	const requirement = locals.user.gender === 'male' ? MALE_REQUIREMENT : FEMALE_REQUIREMENT;
 
