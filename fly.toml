@@ -1,20 +1,25 @@
-app = "sports-tracker-iiith"
-primary_region = "bom"
+# fly.toml app configuration file generated for sports-tracker-iiith on 2026-09-08T16:58:40+05:30
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'sports-tracker-iiith'
+primary_region = 'sin'
 
 [build]
+[[mounts]]
+  source = 'pb_data'
+  destination = '/pb_data'
 
 [http_service]
   internal_port = 3000
   force_https = true
+  auto_stop_machines = 'suspend'
   auto_start_machines = true
-  auto_stop_machines = "suspend"
-  # the volume is single-machine, so never run more than one
   min_machines_running = 1
 
-[[mounts]]
-  source = "pb_data"
-  destination = "/pb_data"
-
 [[vm]]
-  size = "shared-cpu-1x"
-  memory = "256mb"
+  size = 'shared-cpu-1x'
+  memory = '256mb'
+  cpus = 1
+  memory_mb = 256
