@@ -9,9 +9,9 @@
 <AlertDialog.Root {open}>
 	<AlertDialog.Content escapeKeydownBehavior="ignore"> <!-- Can't close -->
 		<AlertDialog.Header>
-			<AlertDialog.Title>Login Required</AlertDialog.Title>
+			<AlertDialog.Title>Please sign in</AlertDialog.Title>
 			<AlertDialog.Description>
-				Please log in or create an account to start tracking your attendance.
+				Please sign in or create an account to start tracking your attendance.
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
