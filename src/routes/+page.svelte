@@ -75,15 +75,20 @@
 <svelte:head><title>Home</title></svelte:head>
 
 <main
-	class="relative mx-auto flex min-h-svh w-full max-w-lg flex-col gap-4 p-4 pt-20"
+	class="relative mx-auto flex min-h-svh w-full max-w-lg flex-col gap-4 p-4 pt-20 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-36"
 	onclickcapture={gateDemo}
 >
 	{#if data.demo}
-		<p class="absolute top-5 right-4 rounded-full bg-card px-3 py-1 text-xs text-muted-foreground">
+		<p
+			class="absolute top-5 right-4 rounded-full bg-card px-3 py-1 text-xs text-muted-foreground sm:top-9 md:top-13 lg:top-17 xl:top-21"
+		>
 			Demo
 		</p>
 	{:else}
-		<Profile username={data.username} />
+		<Profile
+			username={data.username}
+			class="absolute top-4 right-4 sm:top-8 md:top-12 lg:top-16 xl:top-20"
+		/>
 	{/if}
 	<LoginPrompt open={loginOpen} />
 
@@ -176,11 +181,8 @@
 		/>
 	</div>
 
-	<CreditFooter
-		class="mt-auto sm:mt-20 lg:mt-32"
-		people={[{ name: '@asaix', link: 'https://github.com/asaix' }]}
-	/>
-	<p class="text-center text-[6px] text-muted-foreground/40">
-		Not an official IIIT-H website.
-	</p>
+	<footer class="mt-auto flex flex-col items-center gap-1 pt-12">
+		<CreditFooter people={[{ name: '@asaix', link: 'https://github.com/asaix' }]} />
+		<p class="text-center text-[8px] text-muted-foreground/40">Not an official IIIT-H website.</p>
+	</footer>
 </main>
