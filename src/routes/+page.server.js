@@ -4,8 +4,35 @@ const MALE_REQUIREMENT = 34;
 const FEMALE_REQUIREMENT = 32;
 const SEMESTER_START = new Date(2026, 7, 1);
 
+const dayKey = (d) =>
+	`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+function demoData() {
+	const attendanceLog = [];
+	for (let d = new Date(SEMESTER_START); d <= new Date(); d.setDate(d.getDate() + 1)) {
+		attendanceLog.push({ day: dayKey(d), date: new Date(d), id: null, status: '-' });
+	}
+	attendanceLog.reverse(); 
+	for (let i = 1; i <= 9 && i < attendanceLog.length; i += 2) {
+		attendanceLog[i].status = 'Present';
+	}
+
+	return {
+		demo: true,
+		username: 'demo',
+		attendanceLog,
+		extra: [
+			{ id: 'demo-e1', count: 3, reason: 'Inter-college tournament' },
+			{ id: 'demo-e2', count: 1, reason: 'Sports day volunteering' }
+		],
+		leave: [{ id: 'demo-l1', count: 2, reason: 'Fever' }],
+		standard: attendanceLog.filter((e) => e.status === 'Present').length,
+		requirement: MALE_REQUIREMENT
+	};
+}
+
 export async function load({ locals }) {
-	if (!locals.user) redirect(303, '/login');
+	if (!locals.user) return demoData();
 
 	var pb = locals.pb;
 
@@ -16,9 +43,6 @@ export async function load({ locals }) {
 		fields: 'id, date, present',
 		sort: '-date'
 	});
-
-	const dayKey = (d) =>
-		`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 	const byDay = new Map(attendance.map((r) => [dayKey(new Date(r.date)), r]));
 
@@ -42,6 +66,7 @@ export async function load({ locals }) {
 	});
 
 	return {
+		demo: false,
 		username: locals.user.username,
 		attendanceLog: log.reverse(),
 		extra,

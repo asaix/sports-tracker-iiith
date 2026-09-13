@@ -15,6 +15,7 @@
 	import DayMark from '$lib/components/DayMark.svelte';
 	import ExtraLog from '$lib/components/ExtraLog.svelte';
 	import LeaveLog from '$lib/components/LeaveLog.svelte';
+	import LoginPrompt from '$lib/components/LoginPrompt.svelte';
 	import ResponseBtn from '$lib/components/ResponseBtn.svelte';
 	import VEBtn from '$lib/components/VEBtn.svelte';
 	import { invalidateAll } from '$app/navigation';
@@ -22,6 +23,22 @@
 	let { data } = $props();
 
 	let attendanceOpen = $state(false);
+
+	let loginOpen = $state(false);
+	// set 10s timer to show login popout if unauthenticated
+	$effect(() => {
+		if (!data.demo) return;
+		const timer = setTimeout(() => (loginOpen = true), 10_000);
+		return () => clearTimeout(timer);
+	});
+
+	// block clicks if demo
+	function gateDemo(event) {
+		if (!data.demo) return;
+		event.preventDefault();
+		event.stopPropagation();
+		loginOpen = true;
+	}
 
 	let errors = $state({ attendance: '', extra: '', leave: '', bug: '', feedback: '' });
 
@@ -57,8 +74,18 @@
 
 <svelte:head><title>Home</title></svelte:head>
 
-<main class="relative mx-auto flex min-h-svh w-full max-w-lg flex-col gap-4 p-4 pt-20">
-	<Profile username={data.username} />
+<main
+	class="relative mx-auto flex min-h-svh w-full max-w-lg flex-col gap-4 p-4 pt-20"
+	onclickcapture={gateDemo}
+>
+	{#if data.demo}
+		<p class="absolute top-5 right-4 rounded-full bg-card px-3 py-1 text-xs text-muted-foreground">
+			Demo
+		</p>
+	{:else}
+		<Profile username={data.username} />
+	{/if}
+	<LoginPrompt open={loginOpen} />
 
 	<AttendanceBar
 		standard={data.standard}

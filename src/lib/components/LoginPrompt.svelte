@@ -1,0 +1,22 @@
+<script>
+	import { resolve } from '$app/paths';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
+	import { buttonVariants } from '$lib/components/ui/button/index.js';
+
+	let { open = false } = $props();
+</script>
+
+<AlertDialog.Root {open}>
+	<AlertDialog.Content escapeKeydownBehavior="ignore"> <!-- Can't close -->
+		<AlertDialog.Header>
+			<AlertDialog.Title>Login Required</AlertDialog.Title>
+			<AlertDialog.Description>
+				Log in or create an account to start tracking your attendance.
+			</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<a href={resolve('/signup')} class={buttonVariants({ variant: 'outline' })}>Sign up</a>
+			<a href={resolve('/login')} class={buttonVariants()}>Log in</a>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>
