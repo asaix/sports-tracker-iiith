@@ -3,7 +3,7 @@
 
 If you're a student at IIIT Hyderabad, you can use this website to track your progress towards the sports attendance requirement every semester. You can use this repository to submit pull requests with changes you would like to see on the production site.
 
-[Website link](sports-tracker-iiith.fly.dev)
+[Website link](https://sports-tracker-iiith.fly.dev)
 
 </div>
 
