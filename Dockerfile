@@ -28,6 +28,8 @@ RUN chmod +x start.sh
 
 # PORT is read by adapter-node; POCKETBASE_URL by src/hooks.server.js
 ENV PORT=3000
+# set TZ - container would otherwise run on UTC, rolling the day over at 05:30 IST
+ENV TZ=Asia/Kolkata
 ENV POCKETBASE_URL=http://127.0.0.1:8090
 # node does not read the container memory limit, so cap the heap explicitly or
 # V8 sizes it for the host and gets OOM-killed before it ever collects garbage
