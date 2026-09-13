@@ -39,7 +39,7 @@
 		<Textarea
 			bind:value={report}
 			rows={6}
-			placeholder="What's wrong?"
+			placeholder="What went wrong?"
 			class="max-h-[40vh] overflow-y-auto"
 		/>
 
