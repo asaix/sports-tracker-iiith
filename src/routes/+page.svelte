@@ -28,7 +28,7 @@
 	// set 10s timer to show login popout if unauthenticated
 	$effect(() => {
 		if (!data.demo) return;
-		const timer = setTimeout(() => (loginOpen = true), 10_000);
+		const timer = setTimeout(() => (loginOpen = true), 5_000);
 		return () => clearTimeout(timer);
 	});
 
@@ -82,7 +82,7 @@
 		<p
 			class="absolute top-5 right-4 rounded-full bg-card px-3 py-1 text-xs text-muted-foreground sm:top-9 md:top-13 lg:top-17 xl:top-21"
 		>
-			Demo
+			Sign In
 		</p>
 	{:else}
 		<Profile
