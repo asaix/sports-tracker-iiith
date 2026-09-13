@@ -177,7 +177,10 @@
 	</div>
 
 	<CreditFooter
-		class="mt-auto mb-0.5"
+		class="mt-auto sm:mt-20 lg:mt-32 mb-0.5"
 		people={[{ name: '@asaix', link: 'https://github.com/asaix' }]}
 	/>
+	<p class="text-center font-mono text-[8px] text-muted-foreground/60">
+		Not an official IIIT-H website.
+	</p>
 </main>
