@@ -6,10 +6,29 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { genders, signupSchema } from '$lib/schemas.js';
 	import { resolve } from '$app/paths';
+	import { goto } from '$app/navigation';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
 
 	let { data } = $props();
 
-	const form = superForm(data.form, { validators: zod4Client(signupSchema) });
+	let recoveryCode = $state('');
+	let copied = $state(false);
+
+	const form = superForm(data.form, {
+		validators: zod4Client(signupSchema),
+		invalidateAll: false,
+		onResult({ result }) {
+			if (result.type === 'success' && result.data?.recoveryCode) {
+				recoveryCode = result.data.recoveryCode;
+			}
+		}
+	});
+
+	async function copy() {
+		await navigator.clipboard.writeText(recoveryCode);
+		copied = true;
+	}
 	const { form: formData, message, enhance } = form;
 
 	const selectClasses =
@@ -83,3 +102,24 @@
 		</Card.Content>
 	</Card.Root>
 </main>
+
+<AlertDialog.Root open={!!recoveryCode}>
+	<AlertDialog.Content escapeKeydownBehavior="ignore">
+		<AlertDialog.Header>
+			<AlertDialog.Title>Save your recovery code</AlertDialog.Title>
+			<AlertDialog.Description>
+				If you forget your password, you'll need this code to reset it. Copy it and keep it
+				somewhere safe. It won't be shown again.
+			</AlertDialog.Description>
+		</AlertDialog.Header>
+		<p class="rounded-xl bg-muted py-4 text-center font-mono text-2xl tracking-widest">
+			{recoveryCode}
+		</p>
+		<AlertDialog.Footer>
+			<Button variant="outline" class="cursor-pointer" onclick={copy}>
+				{copied ? 'Copied' : 'Copy'}
+			</Button>
+			<Button class="cursor-pointer" onclick={() => goto(resolve('/'))}>Continue</Button>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>

@@ -57,6 +57,9 @@
 				<p class="text-center text-sm text-muted-foreground">
 					No account? <a href={resolve('/signup')} class="underline underline-offset-4">Sign up</a>
 				</p>
+				<p class="text-center text-sm text-muted-foreground">
+					<a href={resolve('/recover')} class="underline underline-offset-4">Forgot your password?</a>
+				</p>
 			</form>
 		</Card.Content>
 	</Card.Root>

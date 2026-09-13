@@ -33,6 +33,11 @@ export const actions = {
 			return message(form, 'Could not create the account. Please try again.', { status: 500 });
 		}
 
-		redirect(303, '/');
+		try {
+			const { code } = await locals.pb.send('/api/recovery/create', { method: 'POST' });
+			return { form, recoveryCode: code.slice(0, 4) + '-' + code.slice(4) };
+		} catch {
+			redirect(303, '/');
+		}
 	}
 };

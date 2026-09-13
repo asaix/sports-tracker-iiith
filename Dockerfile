@@ -23,6 +23,7 @@ COPY --from=build /app/build ./build
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./
 COPY pb_migrations ./pb_migrations
+COPY pb_hooks ./pb_hooks
 COPY start.sh ./
 RUN chmod +x start.sh
 
