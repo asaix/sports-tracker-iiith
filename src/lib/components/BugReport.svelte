@@ -6,7 +6,7 @@
 	let {
 		open = $bindable(false),
 		title = 'Report a bug',
-		description = 'Describe what went wrong. Be as descriptive as you like (more is better).',
+		description = 'Please describe what went wrong. Be as descriptive as you like (more is better).',
 		errormsg = '',
 		onsubmit
 	} = $props();
@@ -39,7 +39,7 @@
 		<Textarea
 			bind:value={report}
 			rows={6}
-			placeholder="What happened?"
+			placeholder="What's wrong?"
 			class="max-h-[40vh] overflow-y-auto"
 		/>
 

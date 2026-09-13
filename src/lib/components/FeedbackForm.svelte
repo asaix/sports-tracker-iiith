@@ -60,7 +60,7 @@
 		<Textarea
 			bind:value={feedback}
 			rows={6}
-			placeholder="Anything else you'd like to tell us?"
+			placeholder="Anything else you'd like to add?"
 			class="max-h-[40vh] overflow-y-auto"
 		/>
 
