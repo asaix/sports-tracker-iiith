@@ -1,42 +1,23 @@
-# sv
+<div align="center">
+<h1>IIIT-H Sports Tracker</h1>
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+If you're a student at IIIT Hyderabad, you can use this website to track your progress towards the sports attendance requirement every semester. You can use this repository to submit pull requests with changes you would like to see on the production site.
 
-## Creating a project
+[Website link](sports-tracker-iiith.fly.dev)
 
-If you're seeing this, you've probably already done this step. Congrats!
+</div>
 
-```sh
-# create a new project
-npx sv create my-app
-```
+---
 
-To recreate this project with the same configuration:
+## Contributions
 
-```sh
-# recreate this project
-npx sv@0.17.0 create --template minimal --no-types --add prettier eslint tailwindcss="plugins:none" --install npm ./
-```
+I've made this project open source in an effort to encourage other students to add features that they may be interested in seeing. 
 
-## Developing
+If you can think of a feature that you would like to see added to this website, please submit a pull request. If approved, your changes will be merged into this repository and be visible on the production website. As a token of gratitude, your name, along with a link to a personal site of your choosing will be displayed on the homepage.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-```sh
-npm run dev
+## Licensing
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+This code is licensed under ELv2. TLDR: You can copy, modify, fork, and share it (including submitting PRs), but you can't offer it to third parties as a hosted/managed service, and you can't disable or bypass any license-key-gated features. You must keep the ELv2 license attached to any copies and disclose any changes to the original software at the time of distribution. You may not relicense your version under different terms. Violating any of this terminates your license.
 
-## Building
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+[You can read the full license here](LICENSE.md).
