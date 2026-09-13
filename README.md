@@ -26,7 +26,7 @@ You'll need Node 22+ and the PocketBase **0.40.0** binary for your OS.
    npm install
    ```
 
-2. Download PocketBase 0.40.0 from the [releases page](https://github.com/pocketbase/pocketbase/releases/tag/v0.40.0) and put the binary in the project root. Don't commit it.
+2. Download PocketBase 0.40.0 from the [releases page](https://github.com/pocketbase/pocketbase/releases/tag/v0.40.0) and put the binary in the project root. Please don't commit it.
 
 3. Start PocketBase:
 
