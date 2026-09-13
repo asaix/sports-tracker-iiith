@@ -57,7 +57,7 @@
 
 <svelte:head><title>Home</title></svelte:head>
 
-<main class="mx-auto flex min-h-svh flex-col gap-4 p-4 pt-16">
+<main class="relative mx-auto flex min-h-svh w-full max-w-lg flex-col gap-4 p-4 pt-16">
 	<Profile username={data.username} />
 
 	<AttendanceBar
