@@ -11,7 +11,7 @@
 		<AlertDialog.Header>
 			<AlertDialog.Title>Login Required</AlertDialog.Title>
 			<AlertDialog.Description>
-				Log in or create an account to start tracking your attendance.
+				Please log in or create an account to start tracking your attendance.
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
