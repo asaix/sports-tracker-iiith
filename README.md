@@ -51,3 +51,7 @@ Licensed under Elastic License 2.0
 This code is licensed under ELv2. TLDR: You can copy, modify, fork, and share it (including submitting PRs), but you can't offer it to third parties as a hosted/managed service, and you can't disable or bypass any license-key-gated features. You must keep the ELv2 license attached to any copies and disclose any changes to the original software at the time of distribution. You may not relicense your version under different terms. Violating any of this terminates your license.
 
 [You can read the full license here](LICENSE.md).
+
+## Disclaimer
+
+*This is an independent project created for tracking sports attendance. It is not an official IIIT Hyderabad platform and is not endorsed, reviewed, or maintained by the institute's administration.*
