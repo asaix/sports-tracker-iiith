@@ -1,6 +1,6 @@
 {
-	"name": "Sports Tracker @ IIIT-H",
-	"short_name": "Sports Tracker",
+	"name": "IIIT-H Sports Tracker",
+	"short_name": "IIIT Sports",
 	"icons": [
 		{ "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
 		{ "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
