@@ -8,25 +8,21 @@ const dayKey = (d) =>
 	`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 function demoData() {
+
+	// The today and yesterday cards need at least two values in attendanceLog
+	// DO NOT REMOVE
 	const attendanceLog = [];
 	for (let d = new Date(SEMESTER_START); d <= new Date(); d.setDate(d.getDate() + 1)) {
 		attendanceLog.push({ day: dayKey(d), date: new Date(d), id: null, status: '-' });
-	}
-	attendanceLog.reverse(); 
-	for (let i = 1; i <= 9 && i < attendanceLog.length; i += 2) {
-		attendanceLog[i].status = 'Present';
 	}
 
 	return {
 		demo: true,
 		username: 'demo',
-		attendanceLog,
-		extra: [
-			{ id: 'demo-e1', count: 3, reason: 'Inter-college tournament' },
-			{ id: 'demo-e2', count: 1, reason: 'Sports day volunteering' }
-		],
-		leave: [{ id: 'demo-l1', count: 2, reason: 'Fever' }],
-		standard: attendanceLog.filter((e) => e.status === 'Present').length,
+		attendanceLog: attendanceLog.reverse(),
+		extra: [],
+		leave: [],
+		standard: 0,
 		requirement: MALE_REQUIREMENT
 	};
 }
