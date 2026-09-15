@@ -35,7 +35,7 @@
 		'h-9 w-full min-w-0 rounded-4xl border border-input bg-input/30 px-3 py-1 text-base outline-none transition-colors focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-[3px] aria-invalid:ring-destructive/20 md:text-sm';
 </script>
 
-<svelte:head><title>Sign up</title></svelte:head>
+<svelte:head><title>Sign up | IIIT-H Sports Tracker</title></svelte:head>
 
 <main class="flex min-h-svh items-center justify-center p-4">
 	<Card.Root class="w-full max-w-sm">

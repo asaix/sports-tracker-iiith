@@ -72,7 +72,7 @@
 	let leavesOpen = $state(false);
 </script>
 
-<svelte:head><title>Home</title></svelte:head>
+<svelte:head><title>IIIT-H Sports Tracker</title></svelte:head>
 
 <main
 	class="relative mx-auto flex min-h-svh w-full max-w-lg flex-col gap-4 p-4 pt-20 sm:pt-24 md:pt-28 lg:pt-32 xl:pt-36"

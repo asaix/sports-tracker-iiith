@@ -9,7 +9,7 @@
 	let { form } = $props();
 </script>
 
-<svelte:head><title>Reset password</title></svelte:head>
+<svelte:head><title>Account Recovery | IIIT-H Sports Tracker</title></svelte:head>
 
 <main class="flex min-h-svh items-center justify-center p-4">
 	<Card.Root class="w-full max-w-sm">

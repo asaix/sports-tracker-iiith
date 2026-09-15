@@ -13,7 +13,7 @@
 	const { form: formData, message, enhance } = form;
 </script>
 
-<svelte:head><title>Sign In</title></svelte:head>
+<svelte:head><title>Sign In | IIIT-H Sports Tracker</title></svelte:head>
 
 <main class="flex min-h-svh items-center justify-center p-4">
 	<Card.Root class="w-full max-w-sm">
