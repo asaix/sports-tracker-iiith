@@ -54,11 +54,13 @@ export async function load({ locals }) {
 	}
 
 	const extra = await pb.collection('extra').getFullList({
-		fields: 'id, count, reason'
+		fields: 'id, count, reason',
+		filter: pb.filter('created >= {:start}', { start: SEMESTER_START })
 	});
 
 	const leave = await pb.collection('leave').getFullList({
-		fields: 'id, count, reason'
+		fields: 'id, count, reason',
+		filter: pb.filter('created >= {:start}', { start: SEMESTER_START })
 	});
 
 	return {
@@ -67,7 +69,7 @@ export async function load({ locals }) {
 		attendanceLog: log.reverse(),
 		extra,
 		leave,
-		standard: attendance.filter((r) => r.present).length,
+		standard: log.filter((r) => r.status === 'Present').length,
 		requirement
 	};
 }
