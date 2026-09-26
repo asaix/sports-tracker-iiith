@@ -24,3 +24,4 @@ vite.config.ts.timestamp-*
 /pb_data
 /pocketbase.exe
 /TODO.txt
+/pocketbase
