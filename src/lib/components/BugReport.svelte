@@ -6,7 +6,7 @@
 	let {
 		open = $bindable(false),
 		title = 'Report a bug',
-		description = 'Please describe what went wrong. Be as descriptive as you like (more is better).',
+		description = 'Please describe what went wrong. Be as descriptive as you like.',
 		errormsg = '',
 		onsubmit
 	} = $props();
