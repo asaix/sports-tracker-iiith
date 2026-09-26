@@ -17,6 +17,7 @@
 
 	let count = $state(1);
 	let reason = $state('');
+	let reasonInput = $state(null);
 
 	// onadd should resolve truthy on success, so input is kept if the save fails
 	async function add() {
@@ -38,7 +39,14 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="sm:max-w-lg">
+	<Dialog.Content
+		class="sm:max-w-lg"
+		onOpenAutoFocus={(e) => {
+			// bits-ui ignores `autofocus` and would focus the first delete button
+			e.preventDefault();
+			requestAnimationFrame(() => reasonInput?.focus());
+		}}
+	>
 		<Dialog.Header>
 			<Dialog.Title>{title}</Dialog.Title>
 			<Dialog.Description>{description}</Dialog.Description>
@@ -71,11 +79,17 @@
 			{/each}
 		</div>
 
-		<div class="flex gap-2">
+		<form
+			class="flex gap-2"
+			onsubmit={(e) => {
+				e.preventDefault();
+				add();
+			}}
+		>
 			<Input type="number" min="1" bind:value={count} class="w-20" aria-label="Days" />
-			<Input bind:value={reason} placeholder="Reason" />
-			<Button class="cursor-pointer" disabled={!reason.trim()} onclick={add}>Add</Button>
-		</div>
+			<Input bind:ref={reasonInput} bind:value={reason} placeholder="Reason" />
+			<Button type="submit" class="cursor-pointer" disabled={!reason.trim()}>Add</Button>
+		</form>
 	</Dialog.Content>
 </Dialog.Root>
 
