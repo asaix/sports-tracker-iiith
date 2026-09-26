@@ -156,11 +156,10 @@
 	<div class="mx-auto my-6 h-1.5 w-15 rounded-full bg-border"></div>
 
 	<div class="grid grid-cols-3 gap-4">
-		<ResponseBtn icon={bugUrl} text="Bug report" class="bg-card" onclick={() => (bugOpen = true)} />
+		<ResponseBtn icon={bugUrl} text="Bug report" onclick={() => (bugOpen = true)} />
 		<ResponseBtn
 			icon={githubUrl}
 			text="Contribute"
-			class="bg-card"
 			onclick={() =>
 				window.open(
 					'https://github.com/asaix/sports-tracker-iiith',
@@ -171,7 +170,6 @@
 		<ResponseBtn
 			icon={starUrl}
 			text="Feedback"
-			class="bg-card"
 			onclick={() => (feedbackOpen = true)}
 		/>
 	</div>

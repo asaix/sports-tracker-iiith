@@ -16,7 +16,7 @@
 </script>
 
 <Card.Root
-	class={cn('w-full  ring-0', className)}
+	class={cn('w-full rounded-lg mb-2 mt-2 ring-0 bg-background', className)}
 	{...restProps}
 >
 	<Card.Content class="flex flex-col gap-3">

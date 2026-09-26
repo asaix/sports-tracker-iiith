@@ -17,7 +17,9 @@
 		<DropdownMenu.Label class="text-muted-foreground">{username}</DropdownMenu.Label>
 		<DropdownMenu.Separator />
 		<form method="POST" action="?/logout">
-			<DropdownMenu.Item variant="destructive" class="w-full cursor-pointer">
+			<DropdownMenu.Item
+				class="w-full cursor-pointer text-color-6 focus:bg-color-6/10 focus:text-color-6"
+			>
 				{#snippet child({ props })}
 					<button type="submit" {...props}>Log out</button>
 				{/snippet}

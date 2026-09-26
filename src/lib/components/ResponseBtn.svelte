@@ -5,7 +5,7 @@
 <button
 	type="button"
 	{onclick}
-	class="flex cursor-pointer flex-col items-center gap-2 rounded-lg px-4 py-3 text-sm shadow-sm {className}"
+	class="flex cursor-pointer flex-col items-center gap-2 rounded-lg px-4 py-3 text-sm {className}"
 >
 	{#if icon}
 		<span
