@@ -15,7 +15,7 @@
 	)}
 	{...restProps}
 >
-	<Card.Content class="flex flex-col items-center gap-2 text-center">
+	<Card.Content class="flex flex-col items-center justify-center gap-2 text-center">
 		{#if icon}
 			<span
 				role="img"
