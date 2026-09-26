@@ -3,7 +3,7 @@
 	let { people = [], class: className = '' } = $props();
 </script>
 
-<p class="text-center font-barcode text-2xl text-muted-foreground {className}">
+<p class="text-center font-barcode text-2xl text-teal-600 {className}">
 	{#each people as person, i (person.link)}
 		<a
 			href={person.link}
