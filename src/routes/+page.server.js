@@ -18,7 +18,6 @@ function demoData() {
 
 	return {
 		demo: true,
-		username: 'demo',
 		attendanceLog: attendanceLog.reverse(),
 		extra: [],
 		leave: [],
