@@ -80,7 +80,7 @@
 >
 	{#if data.demo}
 		<p
-			class="absolute top-5 right-4 rounded-full bg-card px-3 py-1 text-xs text-muted-foreground sm:top-9 md:top-13 lg:top-17 xl:top-21"
+			class="absolute top-5 right-4 rounded-full bg-color-3 px-5 py-3 text-sm text-black sm:top-9 md:top-13 lg:top-17 xl:top-21"
 		>
 			Sign In
 		</p>
