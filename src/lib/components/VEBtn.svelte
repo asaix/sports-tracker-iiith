@@ -17,7 +17,13 @@
 >
 	<Card.Content class="flex flex-col items-center gap-2 text-center">
 		{#if icon}
-			<img src={icon} alt={imgalt} class="size-6" />
+			<span
+				role="img"
+				aria-label={imgalt}
+				aria-hidden={!imgalt}
+				class="size-6 bg-color-3"
+				style={`mask: url("${icon}") center / contain no-repeat; -webkit-mask: url("${icon}") center / contain no-repeat;`}
+			></span>
 		{/if}
 		<span class="text-sm font-medium">{text}</span>
 	</Card.Content>

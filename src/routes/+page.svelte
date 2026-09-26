@@ -153,19 +153,14 @@
 		<VEBtn icon={virusUrl} text="Leaves" onclick={() => (leavesOpen = true)} />
 	</div>
 
-	<div class="mx-auto my-6 h-1.5 w-15 rounded-full bg-color-2"></div>
+	<div class="mx-auto my-6 h-1.5 w-15 rounded-full bg-border"></div>
 
 	<div class="grid grid-cols-3 gap-4">
-		<ResponseBtn
-			icon={bugUrl}
-			text="Bug report"
-			class="bg-red-100"
-			onclick={() => (bugOpen = true)}
-		/>
+		<ResponseBtn icon={bugUrl} text="Bug report" class="bg-card" onclick={() => (bugOpen = true)} />
 		<ResponseBtn
 			icon={githubUrl}
 			text="Contribute"
-			class="bg-blue-100"
+			class="bg-card"
 			onclick={() =>
 				window.open(
 					'https://github.com/asaix/sports-tracker-iiith',
@@ -176,13 +171,13 @@
 		<ResponseBtn
 			icon={starUrl}
 			text="Feedback"
-			class="bg-green-100"
+			class="bg-card"
 			onclick={() => (feedbackOpen = true)}
 		/>
 	</div>
 
 	<footer class="mt-auto flex flex-col items-center gap-1 pt-12">
 		<CreditFooter people={[{ name: '@asaix', link: 'https://github.com/asaix' }]} />
-		<p class="text-center text-[8px] text-muted-foreground/40">Not an official IIIT-H website.</p>
+		<p class="text-center text-[8px] text-muted-foreground/60">Not an official IIIT-H website.</p>
 	</footer>
 </main>

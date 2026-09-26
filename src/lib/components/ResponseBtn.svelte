@@ -1,5 +1,5 @@
 <script>
-	let { icon, text, imgalt = '', onclick, class: className = 'bg-gray-100' } = $props();
+	let { icon, text, imgalt = '', onclick, class: className = 'bg-card' } = $props();
 </script>
 
 <button
@@ -8,7 +8,13 @@
 	class="flex cursor-pointer flex-col items-center gap-2 rounded-lg px-4 py-3 text-sm shadow-sm {className}"
 >
 	{#if icon}
-		<img src={icon} alt={imgalt} class="size-6" />
+		<span
+			role="img"
+			aria-label={imgalt}
+			aria-hidden={!imgalt}
+			class="size-6 bg-color-3"
+			style={`mask: url("${icon}") center / contain no-repeat; -webkit-mask: url("${icon}") center / contain no-repeat;`}
+		></span>
 	{/if}
 	{text}
 </button>

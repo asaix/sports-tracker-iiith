@@ -1,15 +1,19 @@
 /*
- * Project colour scheme. Edit the five values here and nowhere else.
+ * Project colour scheme. Edit the values here and nowhere else.
  *
  * Each one is exposed to Tailwind as a utility, so `bg-color-1`,
  * `text-color-3`, `border-color-5`, `fill-color-2` etc. all work.
  */
 
 :root {
-	--color-1: #fff2f2; /* off white */
-	--color-2: #ffdada; /* pinkish white */
-	--color-3: #ff788d; /* soft red */
-	--color-4: #165823; /* dark green */
+	color-scheme: dark; /* native date pickers, scrollbars */
+	--color-1: #1f2430; /* navy (page) */
+	--color-2: #1f2430; /* navy (page) */
+	--color-3: #ffcc66; /* ayu yellow (accent) */
+	--color-4: #242a37; /* raised navy (cards) */
+	--color-5: #87d96c; /* ayu green (tick) */
+	--color-6: #f28779; /* ayu coral (cross) */
+	--color-7: #cccac2; /* ayu foreground (text) */
 }
 
 @theme inline {
@@ -17,4 +21,7 @@
 	--color-color-2: var(--color-2);
 	--color-color-3: var(--color-3);
 	--color-color-4: var(--color-4);
+	--color-color-5: var(--color-5);
+	--color-color-6: var(--color-6);
+	--color-color-7: var(--color-7);
 }
