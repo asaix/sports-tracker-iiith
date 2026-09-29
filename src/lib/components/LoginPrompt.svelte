@@ -15,8 +15,8 @@
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
-			<a href={resolve('/signup')} class={buttonVariants({ variant: 'outline' })}>Sign up</a>
-			<a href={resolve('/login')} class={buttonVariants()}>Log in</a>
+			<a href={resolve('/signup')} class={buttonVariants()}>Sign up</a>
+			<a href={resolve('/login')} class={buttonVariants({ variant: 'outline' })}>Log in</a>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>
