@@ -7,7 +7,7 @@ export function load({ locals }) {
 export const actions = {
 	default: async ({ request, locals }) => {
 		const form = await request.formData();
-		const username = String(form.get('username') ?? '').trim();
+		const username = String(form.get('username') ?? '').trim().toLowerCase();
 		const code = String(form.get('code') ?? '')
 			.toUpperCase()
 			.replace(/[^A-Z0-9]/g, '');

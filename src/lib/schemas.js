@@ -9,6 +9,7 @@ export const signupSchema = z
 	.object({
 		username: z
 			.string()
+			.toLowerCase()
 			.min(3, 'Username must be at least 3 characters.')
 			.max(32, 'Username must be at most 32 characters.')
 			.regex(/^[a-zA-Z0-9_]+$/, 'Only letters, numbers and underscores.'),
@@ -21,6 +22,6 @@ export const signupSchema = z
 	});
 
 export const loginSchema = z.object({
-	username: z.string().min(1, 'Enter your username.'),
+	username: z.string().toLowerCase().min(1, 'Enter your username.'),
 	password: z.string().min(1, 'Enter your password.')
 });
