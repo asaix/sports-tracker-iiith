@@ -1,6 +1,6 @@
-Elastic License 2.0
+Copyright © 2026, Aditya Sai
 
-URL: https://www.elastic.co/licensing/elastic-license
+Elastic License 2.0
 
 ## Acceptance
 
