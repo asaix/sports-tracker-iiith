@@ -8,7 +8,6 @@ const dayKey = (d) =>
 	`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
 function demoData() {
-
 	// The today and yesterday cards need at least two values in attendanceLog
 	// DO NOT REMOVE
 	const attendanceLog = [];
@@ -88,17 +87,33 @@ export const actions = {
 		const form = await request.formData();
 		const day = String(form.get('day'));
 		const status = String(form.get('status'));
-		const id = String(form.get('id')); // record id NOT user id
 
 		if (!locals.user) return fail(401, { message: 'Unauthorized' });
 		if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) return fail(400, { message: 'Bad date.' });
 		if (!['Present', 'Absent', '-'].includes(status)) return fail(400, { message: 'Bad status.' });
 
+		const next = new Date(`${day}T00:00:00Z`);
+		next.setUTCDate(next.getUTCDate() + 1);
+
 		try {
+			const existing = await pb
+				.collection('attendance')
+				.getFirstListItem(
+					pb.filter('user = {:user} && date >= {:start} && date < {:end}', {
+						user: locals.user.id,
+						start: `${day} 00:00:00.000Z`,
+						end: `${next.toISOString().slice(0, 10)} 00:00:00.000Z`
+					})
+				)
+				.catch((err) => {
+					if (err?.status === 404) return null;
+					throw err;
+				});
+
 			if (status === '-') {
-				await pb.collection('attendance').delete(id);
-			} else if (id) {
-				await pb.collection('attendance').update(id, { present: status === 'Present' });
+				if (existing) await pb.collection('attendance').delete(existing.id);
+			} else if (existing) {
+				await pb.collection('attendance').update(existing.id, { present: status === 'Present' });
 			} else {
 				await pb.collection('attendance').create({
 					user: locals.user.id,
