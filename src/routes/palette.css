@@ -17,7 +17,7 @@
 	--absent: #f28779;
 	--absent-foreground: #222222;
 	--unmarked: #222222; /* P/A buttons with nothing selected */
-	--confirm: #222222; /* "Delete" in confirm dialogs */
+	--confirm: #ffcc66; /* "Delete" in confirm dialogs */
 	--confirm-foreground: #222222;
 	--danger: #f28779; /* log out */
 	--badge: #ffcc66; /* demo "Sign In" pill */
