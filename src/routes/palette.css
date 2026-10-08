@@ -15,6 +15,8 @@
 	--present-foreground: #222222;
 	--absent: #f28779;
 	--absent-foreground: #222222;
+	--plus: #87d96c;
+	--minus: #f28779;
 	--toggle-track: #282828; /* attendance slider, nothing marked */
 	--toggle-ring: #333333;
 	--toggle-thumb: #cccac2;
@@ -40,6 +42,8 @@
 	--color-present-foreground: var(--present-foreground);
 	--color-absent: var(--absent);
 	--color-absent-foreground: var(--absent-foreground);
+	--color-plus: var(--plus);
+	--color-minus: var(--minus);
 	--color-toggle-track: var(--toggle-track);
 	--color-toggle-ring: var(--toggle-ring);
 	--color-toggle-thumb: var(--toggle-thumb);

@@ -1,4 +1,6 @@
 <script>
+	import minusIcon from '$lib/assets/circle-minus-solid-full.svg?raw';
+	import plusIcon from '$lib/assets/circle-plus-solid-full.svg?raw';
 	import xmarkIcon from '$lib/assets/xmark-solid-full.svg?raw';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
@@ -96,7 +98,30 @@
 				add();
 			}}
 		>
-			<Input type="number" min="1" bind:value={count} class="w-20" aria-label="Days" />
+			<div class="flex shrink-0 items-center rounded-4xl border border-input bg-input/30">
+				<Button
+					variant="ghost"
+					size="icon-sm"
+					class="cursor-pointer fill-current text-minus hover:text-minus [&_svg]:size-5"
+					aria-label="Fewer days"
+					disabled={count <= 1}
+					onclick={() => (count = Math.max(1, count - 1))}
+				>
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
+					{@html minusIcon}
+				</Button>
+				<span class="w-6 text-center text-sm tabular-nums" aria-live="polite">{count}</span>
+				<Button
+					variant="ghost"
+					size="icon-sm"
+					class="cursor-pointer fill-current text-plus hover:text-plus [&_svg]:size-5"
+					aria-label="More days"
+					onclick={() => count++}
+				>
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
+					{@html plusIcon}
+				</Button>
+			</div>
 			<Input bind:ref={reasonInput} bind:value={reason} placeholder="Reason" />
 			<Button type="submit" class="cursor-pointer" disabled={!reason.trim()}>Add</Button>
 		</form>
