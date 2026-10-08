@@ -123,7 +123,7 @@
 					{@html plusIcon}
 				</Button>
 			</div>
-			<Input bind:ref={reasonInput} bind:value={reason} placeholder="Reason" />
+			<Input class="focus-visible:ring-0 focus-visible:border-input" bind:ref={reasonInput} bind:value={reason} placeholder="Reason" />
 			<Button type="submit" class="cursor-pointer" disabled={!reason.trim()}>Add</Button>
 		</form>
 	</Dialog.Content>
