@@ -71,8 +71,8 @@
 					>
 						{entry.count}
 					</Item.Media>
-					<Item.Content class="min-w-0 basis-0">
-						<Item.Title class="line-clamp-none break-words">{entry.reason}</Item.Title>
+					<Item.Content class="min-w-0 basis-0 items-center text-center">
+						<Item.Title class="line-clamp-none wrap-anywhere">{entry.reason}</Item.Title>
 					</Item.Content>
 					<Item.Actions>
 						<Button
@@ -123,7 +123,12 @@
 					{@html plusIcon}
 				</Button>
 			</div>
-			<Input class="focus-visible:ring-0 focus-visible:border-input" bind:ref={reasonInput} bind:value={reason} placeholder="Reason" />
+			<Input
+				class="focus-visible:border-input focus-visible:ring-0"
+				bind:ref={reasonInput}
+				bind:value={reason}
+				placeholder="Reason"
+			/>
 			<Button type="submit" class="cursor-pointer" disabled={!reason.trim()}>Add</Button>
 		</form>
 	</Dialog.Content>
@@ -138,7 +143,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Are you sure?</AlertDialog.Title>
-			<AlertDialog.Description>
+			<AlertDialog.Description class="wrap-anywhere">
 				This will permanently remove “{pending?.reason}” ({pending?.count}
 				{pending?.count === 1 ? 'day' : 'days'}). This cannot be undone.
 			</AlertDialog.Description>
