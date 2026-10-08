@@ -7,8 +7,8 @@
 
 :root {
 	color-scheme: dark; /* native date pickers, scrollbars */
-	--color-1: #1f2430; /* navy (page) */
-	--color-2: #1f2430; /* navy (page) */
+	--color-1: #222222; /* navy (page) */
+	--color-2: #222222; /* navy (page) */
 	--color-3: #ffcc66; /* ayu yellow (accent) */
 	--color-4: #222835; /* raised navy (cards) */
 	--color-5: #87d96c; /* ayu green (tick) */

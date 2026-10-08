@@ -35,7 +35,7 @@
 
 		<div class="max-h-[60vh] scrollbar-none overflow-y-auto [&::-webkit-scrollbar]:hidden">
 			<Table.Root>
-				<Table.Header class="sticky top-0 z-10 bg-popover">
+				<Table.Header class="sticky top-0 z-10 bg-card">
 					<Table.Row>
 						<Table.Head class="text-center">Day</Table.Head>
 						<Table.Head class="text-center">Date</Table.Head>
@@ -61,7 +61,7 @@
 											size="icon-sm"
 											class={cn(
 												'cursor-pointer rounded-full',
-												entry.status === value ? selected : 'bg-muted text-muted-foreground'
+												entry.status === value ? selected : 'bg-card text-muted-foreground ring-1 ring-foreground/5'
 											)}
 											aria-label={value}
 											aria-pressed={entry.status === value}

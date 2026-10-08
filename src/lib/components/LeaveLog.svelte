@@ -109,7 +109,7 @@
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel class="cursor-pointer">Cancel</AlertDialog.Cancel>
 			<AlertDialog.Action
-				class="cursor-pointer bg-color-3 text-color-1 hover:bg-color-3/90"
+				class="cursor-pointer bg-card text-color-1 hover:bg-color-3/90"
 				onclick={confirmDelete}
 			>
 				Delete

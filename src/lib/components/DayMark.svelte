@@ -37,7 +37,7 @@
 </script>
 
 <Card.Root
-	class={cn('shadow-sm ring-0 mb-4 transition-colors hover:bg-muted/50 ', className)}
+	class={cn('ring-1 mb-4 bg-card transition-colors hover:bg-muted/50 ', className)}
 	{...restProps}
 >
 	<Card.Content class="flex flex-col items-center gap-3">
