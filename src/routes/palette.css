@@ -8,7 +8,6 @@
 	color-scheme: dark; /* native date pickers, scrollbars */
 	--dialog: #222222; /* dialog & alert dialog panels */
 	--dialog-foreground: #cccac2;
-	--avatar: #222222; /* profile avatar fallback */
 	--icon: #ffcc66; /* masked icons on the home buttons */
 	--icon-hover: #ffcc66; /* delete icons in the leave/extra logs */
 	--rating: #ffcc66; /* filled feedback stars */
@@ -32,7 +31,6 @@
 @theme inline {
 	--color-dialog: var(--dialog);
 	--color-dialog-foreground: var(--dialog-foreground);
-	--color-avatar: var(--avatar);
 	--color-icon: var(--icon);
 	--color-icon-hover: var(--icon-hover);
 	--color-rating: var(--rating);
