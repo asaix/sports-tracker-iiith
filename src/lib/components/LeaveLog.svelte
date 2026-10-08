@@ -4,6 +4,7 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
+	import * as Item from '$lib/components/ui/item/index.js';
 
 	let {
 		open = $bindable(false),
@@ -54,29 +55,39 @@
 			{/if}
 		</Dialog.Header>
 
-		<div
-			class="flex max-h-[50vh] scrollbar-none flex-col gap-3 overflow-y-auto [&::-webkit-scrollbar]:hidden"
+		<Item.Group
+			class="max-h-[50vh] scrollbar-none gap-0 overflow-y-auto rounded-2xl bg-entry ring-1 ring-foreground/5 has-data-[size=sm]:gap-0 [&::-webkit-scrollbar]:hidden"
 		>
-			{#each entries as entry (entry.id)}
-				<div class="flex items-center gap-4 rounded-2xl bg-muted/50 px-5 py-4">
-					<span class="text-3xl font-semibold tabular-nums">{entry.count}</span>
-					<span class="text-xs text-muted-foreground">|</span>
-					<span class="text-sm">{entry.reason}</span>
-					<Button
-						variant="ghost"
-						size="icon-sm"
-						class="ml-auto shrink-0 cursor-pointer fill-muted-foreground hover:fill-icon-hover"
-						aria-label="Delete entry"
-						onclick={() => (pending = entry)}
+			{#each entries as entry, i (entry.id)}
+				{#if i > 0}
+					<Item.Separator class="my-0 bg-foreground/5" />
+				{/if}
+				<Item.Root size="sm" class="rounded-none">
+					<Item.Media
+						class="size-8 rounded-full text-sm font-semibold text-leave tabular-nums ring-1 ring-leave/50"
 					>
-						<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
-						{@html xmarkIcon}
-					</Button>
-				</div>
+						{entry.count}
+					</Item.Media>
+					<Item.Content class="min-w-0 basis-0">
+						<Item.Title class="line-clamp-none break-words">{entry.reason}</Item.Title>
+					</Item.Content>
+					<Item.Actions>
+						<Button
+							variant="ghost"
+							size="icon-sm"
+							class="cursor-pointer fill-muted-foreground hover:fill-icon-hover"
+							aria-label="Delete entry"
+							onclick={() => (pending = entry)}
+						>
+							<!-- eslint-disable-next-line svelte/no-at-html-tags -- static build-time import, not user input -->
+							{@html xmarkIcon}
+						</Button>
+					</Item.Actions>
+				</Item.Root>
 			{:else}
 				<p class="py-6 text-center text-sm text-muted-foreground">No leaves recorded yet.</p>
 			{/each}
-		</div>
+		</Item.Group>
 
 		<form
 			class="flex gap-2"

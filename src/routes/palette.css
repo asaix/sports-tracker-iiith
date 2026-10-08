@@ -22,6 +22,9 @@
 	--danger: #f28779; /* log out */
 	--badge: #ffcc66; /* demo "Sign In" pill */
 	--badge-foreground: #000000;
+	--entry: #222222; /* rows in the leave/extra logs */
+	--leave: #ffcc66; /* count tiles in the leave log */
+	--extra: #87d96c; /* count tiles in the extra log */
 	--divider: #f28779; /* home page divider */
 	--focus: #cccac2; /* button focus ring */
 }
@@ -43,6 +46,9 @@
 	--color-danger: var(--danger);
 	--color-badge: var(--badge);
 	--color-badge-foreground: var(--badge-foreground);
+	--color-entry: var(--entry);
+	--color-leave: var(--leave);
+	--color-extra: var(--extra);
 	--color-divider: var(--divider);
 	--color-focus: var(--focus);
 }
