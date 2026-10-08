@@ -21,7 +21,7 @@
 				role="img"
 				aria-label={imgalt}
 				aria-hidden={!imgalt}
-				class="size-6 bg-color-3"
+				class="size-6 bg-icon"
 				style={`mask: url("${icon}") center / contain no-repeat; -webkit-mask: url("${icon}") center / contain no-repeat;`}
 			></span>
 		{/if}

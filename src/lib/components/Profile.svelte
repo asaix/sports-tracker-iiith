@@ -8,7 +8,7 @@
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger class="cursor-pointer {className}">
 		<Avatar.Root class="size-9" title={username}>
-			<Avatar.Fallback class="bg-card text-xs font-medium text-muted-foreground">
+			<Avatar.Fallback class="bg-avatar text-xs font-medium text-muted-foreground">
 				{username.slice(0, 2).toUpperCase()}
 			</Avatar.Fallback>
 		</Avatar.Root>
@@ -18,7 +18,7 @@
 		<DropdownMenu.Separator />
 		<form method="POST" action="?/logout">
 			<DropdownMenu.Item
-				class="w-full cursor-pointer text-color-6 focus:bg-color-6/10 focus:text-color-6"
+				class="w-full cursor-pointer text-danger focus:bg-danger/10 focus:text-danger"
 			>
 				{#snippet child({ props })}
 					<button type="submit" {...props}>Log out</button>

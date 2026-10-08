@@ -1,27 +1,50 @@
 /*
- * Project colour scheme. Edit the values here and nowhere else.
- *
- * Each one is exposed to Tailwind as a utility, so `bg-color-1`,
- * `text-color-3`, `border-color-5`, `fill-color-2` etc. all work.
+ * Project colour scheme. Each colour is exposed to Tailwind as a utility,
+ * so `bg-present`, `text-rating`, `fill-icon-hover`, `ring-focus` etc. all work.
+ * The shadcn base colours (--background, --card, --muted, ...) live in layout.css.
  */
 
 :root {
 	color-scheme: dark; /* native date pickers, scrollbars */
-	--color-1: #222222; /* navy (page) */
-	--color-2: #222222; /* navy (page) */
-	--color-3: #ffcc66; /* ayu yellow (accent) */
-	--color-4: #222835; /* raised navy (cards) */
-	--color-5: #87d96c; /* ayu green (tick) */
-	--color-6: #f28779; /* ayu coral (cross) */
-	--color-7: #cccac2; /* ayu foreground (text) */
+	--dialog: #222222; /* dialog & alert dialog panels */
+	--dialog-foreground: #cccac2;
+	--avatar: #222222; /* profile avatar fallback */
+	--icon: #ffcc66; /* masked icons on the home buttons */
+	--icon-hover: #ffcc66; /* delete icons in the leave/extra logs */
+	--rating: #ffcc66; /* filled feedback stars */
+	--present: #87d96c;
+	--present-foreground: #222222;
+	--absent: #f28779;
+	--absent-foreground: #222222;
+	--unmarked: #222222; /* P/A buttons with nothing selected */
+	--confirm: #222222; /* "Delete" in confirm dialogs */
+	--confirm-foreground: #222222;
+	--confirm-hover: #ffcc66;
+	--danger: #f28779; /* log out */
+	--badge: #ffcc66; /* demo "Sign In" pill */
+	--badge-foreground: #000000;
+	--divider: #f28779; /* home page divider */
+	--focus: #cccac2; /* button focus ring */
 }
 
 @theme inline {
-	--color-color-1: var(--color-1);
-	--color-color-2: var(--color-2);
-	--color-color-3: var(--color-3);
-	--color-color-4: var(--color-4);
-	--color-color-5: var(--color-5);
-	--color-color-6: var(--color-6);
-	--color-color-7: var(--color-7);
+	--color-dialog: var(--dialog);
+	--color-dialog-foreground: var(--dialog-foreground);
+	--color-avatar: var(--avatar);
+	--color-icon: var(--icon);
+	--color-icon-hover: var(--icon-hover);
+	--color-rating: var(--rating);
+	--color-present: var(--present);
+	--color-present-foreground: var(--present-foreground);
+	--color-absent: var(--absent);
+	--color-absent-foreground: var(--absent-foreground);
+	--color-unmarked: var(--unmarked);
+	--color-confirm: var(--confirm);
+	--color-confirm-foreground: var(--confirm-foreground);
+	--color-confirm-hover: var(--confirm-hover);
+	--color-danger: var(--danger);
+	--color-badge: var(--badge);
+	--color-badge-foreground: var(--badge-foreground);
+	--color-divider: var(--divider);
+	--color-focus: var(--focus);
 }

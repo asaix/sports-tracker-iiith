@@ -80,7 +80,7 @@
 >
 	{#if data.demo}
 		<p
-			class="absolute top-5 right-4 rounded-full bg-color-3 px-5 py-3 text-sm text-black sm:top-9 md:top-13 lg:top-17 xl:top-21"
+			class="absolute top-5 right-4 rounded-full bg-badge px-5 py-3 text-sm text-badge-foreground sm:top-9 md:top-13 lg:top-17 xl:top-21"
 		>
 			Sign In
 		</p>
@@ -153,7 +153,7 @@
 		<VEBtn icon={virusUrl} text="Leaves" onclick={() => (leavesOpen = true)} />
 	</div>
 
-	<div class="mx-auto my-6 h-1.5 w-15 rounded-full bg-color-6/15"></div>
+	<div class="mx-auto my-6 h-1.5 w-15 rounded-full bg-divider/15"></div>
 
 	<div class="grid grid-cols-3 gap-4">
 		<ResponseBtn icon={bugUrl} text="Bug report" onclick={() => (bugOpen = true)} />

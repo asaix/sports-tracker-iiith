@@ -16,8 +16,8 @@
 	// value sent to the server, letter shown on the button, colour when selected.
 	// Clicking the already-selected one sends '-', which clears the day.
 	const statuses = [
-		{ value: 'Present', label: 'P', selected: 'bg-color-5 text-color-1 hover:bg-color-5/90' },
-		{ value: 'Absent', label: 'A', selected: 'bg-color-6 text-color-1 hover:bg-color-6/90' }
+		{ value: 'Present', label: 'P', selected: 'bg-present text-present-foreground hover:bg-present/90' },
+		{ value: 'Absent', label: 'A', selected: 'bg-absent text-absent-foreground hover:bg-absent/90' }
 	];
 
 	const asDate = (date) => (date instanceof Date ? date : new Date(date));
@@ -35,7 +35,7 @@
 
 		<div class="max-h-[60vh] scrollbar-none overflow-y-auto [&::-webkit-scrollbar]:hidden">
 			<Table.Root>
-				<Table.Header class="sticky top-0 z-10 bg-card">
+				<Table.Header class="sticky top-0 z-10 bg-dialog">
 					<Table.Row>
 						<Table.Head class="text-center">Day</Table.Head>
 						<Table.Head class="text-center">Date</Table.Head>
@@ -61,7 +61,7 @@
 											size="icon-sm"
 											class={cn(
 												'cursor-pointer rounded-full',
-												entry.status === value ? selected : 'bg-card text-muted-foreground ring-1 ring-foreground/5'
+												entry.status === value ? selected : 'bg-unmarked text-muted-foreground ring-1 ring-foreground/5'
 											)}
 											aria-label={value}
 											aria-pressed={entry.status === value}

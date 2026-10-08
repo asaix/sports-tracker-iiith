@@ -45,7 +45,7 @@
 					type="button"
 					class={cn(
 						'cursor-pointer fill-current [&_svg]:size-12',
-						star <= stars ? 'text-color-3' : 'text-muted-foreground'
+						star <= stars ? 'text-rating' : 'text-muted-foreground'
 					)}
 					aria-label="{star} star{star === 1 ? '' : 's'}"
 					aria-pressed={star === stars}

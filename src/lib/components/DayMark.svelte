@@ -26,7 +26,7 @@
 
 	const markClass = (selected, ring) =>
 		cn(
-			'cursor-pointer rounded-md fill-current text-color-1 shadow-2xs transition-all duration-200 hover:scale-105',
+			'cursor-pointer rounded-md fill-current shadow-2xs transition-all duration-200 hover:scale-105',
 			selected && `scale-105 ring-2 ring-offset-2 ring-offset-card ${ring}`,
 			chosen && !selected && 'opacity-30 saturate-50 hover:opacity-70'
 		);
@@ -50,8 +50,8 @@
 			<Button
 				size="icon"
 				class={cn(
-					'bg-color-5 hover:bg-color-5/90',
-					markClass(status === 'Present', 'ring-color-5')
+					'bg-present text-present-foreground hover:bg-present/90',
+					markClass(status === 'Present', 'ring-present')
 				)}
 				aria-label="Mark attended"
 				aria-pressed={status === 'Present'}
@@ -62,7 +62,7 @@
 			</Button>
 			<Button
 				size="icon"
-				class={cn('bg-color-6 hover:bg-color-6/90', markClass(status === 'Absent', 'ring-color-6'))}
+				class={cn('bg-absent text-absent-foreground hover:bg-absent/90', markClass(status === 'Absent', 'ring-absent'))}
 				aria-label="Mark missed"
 				aria-pressed={status === 'Absent'}
 				onclick={press('Absent', onabsent)}
