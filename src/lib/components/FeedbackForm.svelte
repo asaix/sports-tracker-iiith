@@ -61,7 +61,7 @@
 			bind:value={feedback}
 			rows={6}
 			placeholder="Anything else you'd like to add?"
-			class="max-h-[40vh] overflow-y-auto"
+			class="max-h-[40vh] overflow-y-auto focus-visible:border-input"
 		/>
 
 		<Dialog.Footer>

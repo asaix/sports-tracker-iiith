@@ -40,7 +40,7 @@
 			bind:value={report}
 			rows={6}
 			placeholder="What went wrong?"
-			class="max-h-[40vh] overflow-y-auto"
+			class="max-h-[40vh] overflow-y-auto focus-visible:border-input"
 		/>
 
 		<Dialog.Footer>
