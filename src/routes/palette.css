@@ -15,7 +15,9 @@
 	--present-foreground: #222222;
 	--absent: #f28779;
 	--absent-foreground: #222222;
-	--unmarked: #222222; /* P/A buttons with nothing selected */
+	--toggle-track: #282828; /* attendance slider, nothing marked */
+	--toggle-ring: #333333;
+	--toggle-thumb: #cccac2;
 	--confirm: #ffcc66; /* "Delete" in confirm dialogs */
 	--confirm-foreground: #222222;
 	--danger: #f28779; /* log out */
@@ -38,7 +40,9 @@
 	--color-present-foreground: var(--present-foreground);
 	--color-absent: var(--absent);
 	--color-absent-foreground: var(--absent-foreground);
-	--color-unmarked: var(--unmarked);
+	--color-toggle-track: var(--toggle-track);
+	--color-toggle-ring: var(--toggle-ring);
+	--color-toggle-thumb: var(--toggle-thumb);
 	--color-confirm: var(--confirm);
 	--color-confirm-foreground: var(--confirm-foreground);
 	--color-danger: var(--danger);
