@@ -110,7 +110,7 @@
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel class="cursor-pointer">Cancel</AlertDialog.Cancel>
 			<AlertDialog.Action
-				class="cursor-pointer bg-confirm text-confirm-foreground hover:bg-confirm-hover/90"
+				class="cursor-pointer bg-confirm text-confirm-foreground"
 				onclick={confirmDelete}
 			>
 				Delete

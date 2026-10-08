@@ -19,7 +19,6 @@
 	--unmarked: #222222; /* P/A buttons with nothing selected */
 	--confirm: #222222; /* "Delete" in confirm dialogs */
 	--confirm-foreground: #222222;
-	--confirm-hover: #ffcc66;
 	--danger: #f28779; /* log out */
 	--badge: #ffcc66; /* demo "Sign In" pill */
 	--badge-foreground: #000000;
@@ -41,7 +40,6 @@
 	--color-unmarked: var(--unmarked);
 	--color-confirm: var(--confirm);
 	--color-confirm-foreground: var(--confirm-foreground);
-	--color-confirm-hover: var(--confirm-hover);
 	--color-danger: var(--danger);
 	--color-badge: var(--badge);
 	--color-badge-foreground: var(--badge-foreground);

@@ -37,7 +37,7 @@
 </script>
 
 <Card.Root
-	class={cn('ring-1 mb-4 bg-card transition-colors hover:bg-muted/50 ', className)}
+	class={cn('ring-1 mb-4 bg-card ', className)}
 	{...restProps}
 >
 	<Card.Content class="flex flex-col items-center gap-3">
@@ -50,7 +50,7 @@
 			<Button
 				size="icon"
 				class={cn(
-					'bg-present text-present-foreground hover:bg-present/90',
+					'bg-present text-present-foreground',
 					markClass(status === 'Present', 'ring-present')
 				)}
 				aria-label="Mark attended"
@@ -62,7 +62,7 @@
 			</Button>
 			<Button
 				size="icon"
-				class={cn('bg-absent text-absent-foreground hover:bg-absent/90', markClass(status === 'Absent', 'ring-absent'))}
+				class={cn('bg-absent text-absent-foreground', markClass(status === 'Absent', 'ring-absent'))}
 				aria-label="Mark missed"
 				aria-pressed={status === 'Absent'}
 				onclick={press('Absent', onabsent)}

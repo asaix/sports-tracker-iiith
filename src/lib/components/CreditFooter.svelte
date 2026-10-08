@@ -9,7 +9,7 @@
 			href={person.link}
 			target="_blank"
 			rel="noopener noreferrer"
-			class="underline-offset-4 transition-colors hover:text-foreground hover:underline"
+			class="underline-offset-4 hover:text-foreground hover:underline"
 		>
 			{person.name}
 		</a>{i < people.length - 1 ? ',' : ''}

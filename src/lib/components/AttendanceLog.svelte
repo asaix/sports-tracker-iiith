@@ -16,8 +16,8 @@
 	// value sent to the server, letter shown on the button, colour when selected.
 	// Clicking the already-selected one sends '-', which clears the day.
 	const statuses = [
-		{ value: 'Present', label: 'P', selected: 'bg-present text-present-foreground hover:bg-present/90' },
-		{ value: 'Absent', label: 'A', selected: 'bg-absent text-absent-foreground hover:bg-absent/90' }
+		{ value: 'Present', label: 'P', selected: 'bg-present text-present-foreground' },
+		{ value: 'Absent', label: 'A', selected: 'bg-absent text-absent-foreground' }
 	];
 
 	const asDate = (date) => (date instanceof Date ? date : new Date(date));
