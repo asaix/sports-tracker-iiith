@@ -33,7 +33,10 @@
 
 	// Clicking the highlighted button clears the day instead of re-sending the
 	// same status. Without an `onunmark` handler it is simply a no-op.
-	const press = (mine, mark) => () => (status === mine ? onunmark?.() : mark?.());
+	const press = (mine, mark) => () => {
+		navigator.vibrate?.(10);
+		status === mine ? onunmark?.() : mark?.();
+	};
 </script>
 
 <Card.Root
