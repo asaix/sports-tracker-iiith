@@ -71,7 +71,9 @@
 	// there is at most one op per item and requests can't race each other.
 
 
-	let ops = $state([]); // pending ops {key, action, fields}
+	// state.raw used to enable comparisons of savedWith
+	// reassign array to trigger state update
+	let ops = $state.raw([]); // pending ops {key, action, fields, savedWith?}
 	let nextOp = 0; // used to make each op's key unique
 	let failure = $state(null); // text for error dialog. null=>dialog closed
 
@@ -88,7 +90,7 @@
 
 	async function submit(action, fields) {
 		const key = `${action}:${nextOp++}`;
-		ops.push({ key, action, fields });
+		ops = [...ops, { key, action, fields }];
 
 		let result;
 		try {
@@ -98,28 +100,48 @@
 			result = { type: 'error', error: err };
 		}
 
-		try {
-			if (result.type === 'success') await invalidateAll();
-			else failure = errorText(result);
-		} finally {
-			// drop after reload to avoid flicker
+		if (result.type !== 'success') {
+			// drop op and show err if req failed
 			ops = ops.filter((op) => op.key !== key);
+			failure = errorText(result);
+			return false;
 		}
-		return result.type === 'success';
+
+		// if two requests are sent in quick succession
+		// then both are faded 
+		// but if reload #1 from invalidateAll is thrown away
+		// the page flickers back to the old data state because that reload never ran as svelte discarded it in favor of reload #2
+		// then reload #2 runs and both requests are updated
+		// TO FIX THIS, THIS NOW REMOVES THE OP ONLY WHEN DATA CHANGES INSTEAD OF WHEN THE RELOAD FINISHES
+
+		// note state of data after successful send to server
+		ops = ops.map((op) => (op.key === key ? { ...op, savedWith: data } : op));
+
+		try {
+			await invalidateAll();
+		} finally {
+			// remove ops with old data state
+			ops = ops.filter(isLive);
+		}
+		return true;
 	}
+
+	// unsaved, or saved but `data` hasn't been replaced since (invalidateAll reload NOT dropped)
+	const isLive = (op) => !op.savedWith || op.savedWith === data;
+	const live = $derived(ops.filter(isLive));
 
 	// include pending attendance state
 	const attendanceLog = $derived(
 		data.attendanceLog.map((entry) => {
-			const op = ops.find((o) => o.action === 'ma' && o.fields.day === entry.day);
+			const op = live.find((o) => o.action === 'ma' && o.fields.day === entry.day);
 			return op ? { ...entry, status: op.fields.status, pending: true } : entry;
 		})
 	);
 
 	// include pending extralog and leavelog states
 	function overlay(entries, addAction, deleteAction) {
-		const deleting = new Set(ops.filter((o) => o.action === deleteAction).map((o) => o.fields.id));
-		const adding = ops
+		const deleting = new Set(live.filter((o) => o.action === deleteAction).map((o) => o.fields.id));
+		const adding = live
 			.filter((o) => o.action === addAction)
 			.map((o) => ({
 				id: o.key,
