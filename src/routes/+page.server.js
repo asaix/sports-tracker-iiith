@@ -2,16 +2,24 @@ import { fail, redirect } from '@sveltejs/kit';
 
 const MALE_REQUIREMENT = 34;
 const FEMALE_REQUIREMENT = 32;
-const SEMESTER_START = new Date(2026, 7, 1);
 
 const dayKey = (d) =>
 	`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 
+// Semesters start on 30 July and 30 December. Everything is scoped to the
+// current one, so nothing from the previous semester carries over.
+function semesterStart(now = new Date()) {
+	const y = now.getFullYear();
+	if (now >= new Date(y, 11, 30)) return new Date(y, 11, 30);
+	if (now >= new Date(y, 6, 30)) return new Date(y, 6, 30);
+	return new Date(y - 1, 11, 30);
+}
+
 function demoData() {
-	// The today and yesterday cards need at least two values in attendanceLog
-	// DO NOT REMOVE
+	// The today card needs at least one value in attendanceLog (the yesterday
+	// card is hidden on a semester's first day). DO NOT REMOVE
 	const attendanceLog = [];
-	for (let d = new Date(SEMESTER_START); d <= new Date(); d.setDate(d.getDate() + 1)) {
+	for (let d = semesterStart(); d <= new Date(); d.setDate(d.getDate() + 1)) {
 		attendanceLog.push({ day: dayKey(d), date: new Date(d), id: null, status: '-' });
 	}
 
@@ -31,17 +39,19 @@ export async function load({ locals }) {
 	var pb = locals.pb;
 
 	const requirement = locals.user.gender === 'male' ? MALE_REQUIREMENT : FEMALE_REQUIREMENT;
+	const start = semesterStart();
 
 	// attendance log
 	const attendance = await pb.collection('attendance').getFullList({
 		fields: 'id, date, present',
+		filter: pb.filter('date >= {:start}', { start: `${dayKey(start)} 00:00:00.000Z` }),
 		sort: '-date'
 	});
 
 	const byDay = new Map(attendance.map((r) => [dayKey(new Date(r.date)), r]));
 
 	const log = [];
-	for (let d = new Date(SEMESTER_START); d <= new Date(); d.setDate(d.getDate() + 1)) {
+	for (let d = new Date(start); d <= new Date(); d.setDate(d.getDate() + 1)) {
 		const record = byDay.get(dayKey(d));
 		log.push({
 			day: dayKey(d),
@@ -53,12 +63,12 @@ export async function load({ locals }) {
 
 	const extra = await pb.collection('extra').getFullList({
 		fields: 'id, count, reason',
-		filter: pb.filter('created >= {:start}', { start: SEMESTER_START })
+		filter: pb.filter('created >= {:start}', { start })
 	});
 
 	const leave = await pb.collection('leave').getFullList({
 		fields: 'id, count, reason',
-		filter: pb.filter('created >= {:start}', { start: SEMESTER_START })
+		filter: pb.filter('created >= {:start}', { start })
 	});
 
 	return {

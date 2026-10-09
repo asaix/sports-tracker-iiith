@@ -105,15 +105,27 @@
 			onabsent={() => handleAttendanceChange(data.attendanceLog[0], 'Absent')}
 			onunmark={() => handleAttendanceChange(data.attendanceLog[0], '-')}
 			status={data.attendanceLog[0].status}
-		/>
-		<DayMark
-			date={data.attendanceLog[1].date}
-			onpresent={() => handleAttendanceChange(data.attendanceLog[1], 'Present')}
-			onabsent={() => handleAttendanceChange(data.attendanceLog[1], 'Absent')}
-			onunmark={() => handleAttendanceChange(data.attendanceLog[1], '-')}
-			isToday={false}
-			status={data.attendanceLog[1].status}
-		/>
+					/>
+		
+		{#if data.attendanceLog[1]}
+			<DayMark
+				date={data.attendanceLog[1].date}
+				onpresent={() => handleAttendanceChange(data.attendanceLog[1], 'Present')}
+				onabsent={() => handleAttendanceChange(data.attendanceLog[1], 'Absent')}
+				onunmark={() => handleAttendanceChange(data.attendanceLog[1], '-')}
+				isToday={false}
+				status={data.attendanceLog[1].status}
+			/>
+
+		{:else}
+			<!-- hide yesterday card on first day of the semester-->
+			<DayMark
+              date={new Date(+new Date(data.attendanceLog[0].date) - 86_400_000)}
+              isToday={false}
+              inert
+              class="opacity-40 grayscale"
+			/>
+		{/if}
 	</div>
 
 	<AttendanceLog
