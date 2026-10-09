@@ -1,6 +1,7 @@
 <script>
 	import './layout.css';
 	import { invalidateAll } from '$app/navigation';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 
@@ -8,6 +9,8 @@
 	let lastRefresh = Date.now();
 
 	function refresh(force = false) {
+		// only run on /
+		if (page.route.id !== '/') return;
 		if (!force && Date.now() - lastRefresh < STALE_AFTER) return;
 		lastRefresh = Date.now();
 		invalidateAll();
