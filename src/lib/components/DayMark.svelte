@@ -9,6 +9,7 @@
 		isToday = true,
 		date = new Date(),
 		status = '-',
+		pending = false,
 		onpresent,
 		onabsent,
 		onunmark,
@@ -39,8 +40,10 @@
 	};
 </script>
 
+<!-- locked while a change is saving, so only one request per day is in flight -->
 <Card.Root
-	class={cn('ring-1 mb-4 bg-card ', className)}
+	inert={pending}
+	class={cn('ring-1 mb-4 bg-card transition-opacity', pending && 'opacity-50', className)}
 	{...restProps}
 >
 	<Card.Content class="flex flex-col items-center gap-3">

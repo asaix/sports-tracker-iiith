@@ -2,14 +2,14 @@
 	import AttendanceSlider from '$lib/components/AttendanceSlider.svelte';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
+	import { cn } from '$lib/utils.js';
 
 	let {
 		open = $bindable(false),
 		title = 'Past Attendance',
 		description = 'View and update your records here.',
 		entries = [],
-		onchange,
-		errormsg = ''
+		onchange
 	} = $props();
 
 	// slider value <-> status sent to the server ('-' clears the day)
@@ -24,9 +24,6 @@
 		<Dialog.Header>
 			<Dialog.Title>{title}</Dialog.Title>
 			<Dialog.Description>{description}</Dialog.Description>
-			{#if errormsg}
-				<p class="text-sm font-medium text-destructive" role="alert">{errormsg}</p>
-			{/if}
 		</Dialog.Header>
 
 		<div class="max-h-[60vh] scrollbar-none overflow-y-auto [&::-webkit-scrollbar]:hidden">
@@ -51,7 +48,13 @@
 								})}
 							</Table.Cell>
 							<Table.Cell>
-								<div class="flex justify-center">
+								<div
+									inert={entry.pending}
+									class={cn(
+										'flex justify-center transition-opacity',
+										entry.pending && 'opacity-50'
+									)}
+								>
 									<AttendanceSlider
 										value={toPos(entry.status)}
 										label="Attendance on {asDate(entry.date).toLocaleDateString('en-GB')}"

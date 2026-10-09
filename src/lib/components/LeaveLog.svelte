@@ -7,6 +7,7 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import * as Item from '$lib/components/ui/item/index.js';
+	import { cn } from '$lib/utils.js';
 
 	let {
 		open = $bindable(false),
@@ -14,8 +15,7 @@
 		description = 'Days excused from your attendance requirement.',
 		entries = [],
 		ondelete,
-		onadd,
-		errormsg = ''
+		onadd
 	} = $props();
 
 	let count = $state(1);
@@ -27,14 +27,15 @@
 		navigator.vibrate?.(10);
 	}
 
-	// onadd should resolve truthy on success, so input is kept if the save fails
-	async function add() {
+	
+	function add() {
 		if (!reason.trim()) return;
 
-		if (await onadd?.({ count: String(count), reason: reason.trim() })) {
-			count = 1;
-			reason = '';
-		}
+		onadd?.({ count: String(count), reason: reason.trim() });
+
+		// the new entry shows up in the list (pending) straight away, so clear now
+		count = 1;
+		reason = '';
 	}
 
 	let pending = $state(null);
@@ -57,9 +58,6 @@
 		<Dialog.Header>
 			<Dialog.Title>{title}</Dialog.Title>
 			<Dialog.Description>{description}</Dialog.Description>
-			{#if errormsg}
-				<p class="text-sm font-medium text-destructive" role="alert">{errormsg}</p>
-			{/if}
 		</Dialog.Header>
 
 		<Item.Group
@@ -69,14 +67,26 @@
 				{#if i > 0}
 					<Item.Separator class="my-0 bg-foreground/5" />
 				{/if}
-				<Item.Root size="sm" class="rounded-none">
+				<!-- pending entries are locked until saved: no deleting one that has no id yet -->
+				<Item.Root
+					size="sm"
+					inert={!!entry.pending}
+					class={cn('rounded-none transition-opacity', entry.pending && 'opacity-50')}
+				>
 					<Item.Media
 						class="size-8 rounded-full text-sm font-semibold text-leave tabular-nums ring-1 ring-leave/50"
 					>
 						{entry.count}
 					</Item.Media>
 					<Item.Content class="min-w-0 basis-0 items-center text-center">
-						<Item.Title class="line-clamp-none wrap-anywhere">{entry.reason}</Item.Title>
+						<Item.Title
+							class={cn(
+								'line-clamp-none wrap-anywhere',
+								entry.pending === 'delete' && 'line-through'
+							)}
+						>
+							{entry.reason}
+						</Item.Title>
 					</Item.Content>
 					<Item.Actions>
 						<Button

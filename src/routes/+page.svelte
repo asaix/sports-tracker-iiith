@@ -18,6 +18,7 @@
 	import LoginPrompt from '$lib/components/LoginPrompt.svelte';
 	import ResponseBtn from '$lib/components/ResponseBtn.svelte';
 	import VEBtn from '$lib/components/VEBtn.svelte';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog/index.js';
 	import { invalidateAll } from '$app/navigation';
 
 	let { data } = $props();
@@ -40,17 +41,20 @@
 		loginOpen = true;
 	}
 
-	let errors = $state({ attendance: '', extra: '', leave: '', bug: '', feedback: '' });
+	let errors = $state({ bug: '', feedback: '' });
 
-	const extraTotal = $derived(data.extra.reduce((sum, e) => sum + e.count, 0));
-	const leaveTotal = $derived(data.leave.reduce((sum, e) => sum + e.count, 0));
-
-	async function callAction(action, fields, errorKey) {
+	async function post(action, fields, keepalive = false) {
 		const body = new FormData();
 		for (const [key, value] of Object.entries(fields)) body.set(key, value);
 
-		const res = await fetch(`?/${action}`, { method: 'POST', body });
-		const result = deserialize(await res.text());
+		const res = await fetch(`?/${action}`, { method: 'POST', body, keepalive });
+		return deserialize(await res.text());
+	}
+
+	// callAction for non-optimistic changes (bug report and feedback)
+	// function submit defined below for optimistic updates
+	async function callAction(action, fields, errorKey) {
+		const result = await post(action, fields);
 
 		if (result.type === 'success') {
 			errors[errorKey] = '';
@@ -62,8 +66,87 @@
 		return false;
 	}
 
+	// Optimistic changes still waiting on the server. The UI shows `data` (the
+	// server's truth) with these applied on top. Pending items are inert, so
+	// there is at most one op per item and requests can't race each other.
+
+
+	let ops = $state([]); // pending ops {key, action, fields}
+	let nextOp = 0; // used to make each op's key unique
+	let failure = $state(null); // text for error dialog. null=>dialog closed
+
+	function errorText(result) {
+		// get error text from fail() responses from actions
+		if (result.type === 'failure') return result.data?.message ?? `HTTP ${result.status}`;
+		if (result.type === 'error') {
+			const err = result.error;
+			return err instanceof Error ? String(err) : (err?.message ?? `HTTP ${result.status}`);
+		}
+		return `Unexpected ${result.type} result`;
+	}
+
+
+	async function submit(action, fields) {
+		const key = `${action}:${nextOp++}`;
+		ops.push({ key, action, fields });
+
+		let result;
+		try {
+			// keepalive so a change made just before closing the app still lands
+			result = await post(action, fields, true);
+		} catch (err) {
+			result = { type: 'error', error: err };
+		}
+
+		try {
+			if (result.type === 'success') await invalidateAll();
+			else failure = errorText(result);
+		} finally {
+			// drop after reload to avoid flicker
+			ops = ops.filter((op) => op.key !== key);
+		}
+		return result.type === 'success';
+	}
+
+	// include pending attendance state
+	const attendanceLog = $derived(
+		data.attendanceLog.map((entry) => {
+			const op = ops.find((o) => o.action === 'ma' && o.fields.day === entry.day);
+			return op ? { ...entry, status: op.fields.status, pending: true } : entry;
+		})
+	);
+
+	// include pending extralog and leavelog states
+	function overlay(entries, addAction, deleteAction) {
+		const deleting = new Set(ops.filter((o) => o.action === deleteAction).map((o) => o.fields.id));
+		const adding = ops
+			.filter((o) => o.action === addAction)
+			.map((o) => ({
+				id: o.key,
+				count: Number(o.fields.count),
+				reason: o.fields.reason,
+				pending: 'add'
+			}));
+		return [
+			...entries.map((e) => (deleting.has(e.id) ? { ...e, pending: 'delete' } : e)),
+			...adding
+		];
+	}
+
+	const extra = $derived(overlay(data.extra, 'ae', 'de'));
+	const leave = $derived(overlay(data.leave, 'al', 'dl'));
+
+	// skip pending deleted entries when counting extras and leaves
+	const counted = (entries) =>
+		entries.reduce((sum, e) => (e.pending === 'delete' ? sum : sum + e.count), 0);
+
+	
+	const standard = $derived(attendanceLog.filter((e) => e.status === 'Present').length);
+	const extraTotal = $derived(counted(extra));
+	const leaveTotal = $derived(counted(leave));
+
 	function handleAttendanceChange(entry, status) {
-		return callAction('ma', { day: entry.day, status, id: entry.id ?? '' }, 'attendance');
+		return submit('ma', { day: entry.day, status });
 	}
 
 	let bugOpen = $state(false);
@@ -93,34 +176,36 @@
 	<LoginPrompt open={loginOpen} />
 
 	<AttendanceBar
-		standard={data.standard}
+		{standard}
 		requirement={data.requirement}
 		extra={extraTotal}
 		leaves={leaveTotal}
 	/>
 	<div class="grid grid-cols-2 gap-4">
 		<DayMark
-			date={data.attendanceLog[0].date}
-			onpresent={() => handleAttendanceChange(data.attendanceLog[0], 'Present')}
-			onabsent={() => handleAttendanceChange(data.attendanceLog[0], 'Absent')}
-			onunmark={() => handleAttendanceChange(data.attendanceLog[0], '-')}
-			status={data.attendanceLog[0].status}
+			date={attendanceLog[0].date}
+			onpresent={() => handleAttendanceChange(attendanceLog[0], 'Present')}
+			onabsent={() => handleAttendanceChange(attendanceLog[0], 'Absent')}
+			onunmark={() => handleAttendanceChange(attendanceLog[0], '-')}
+			status={attendanceLog[0].status}
+			pending={attendanceLog[0].pending}
 					/>
 		
-		{#if data.attendanceLog[1]}
+		{#if attendanceLog[1]}
 			<DayMark
-				date={data.attendanceLog[1].date}
-				onpresent={() => handleAttendanceChange(data.attendanceLog[1], 'Present')}
-				onabsent={() => handleAttendanceChange(data.attendanceLog[1], 'Absent')}
-				onunmark={() => handleAttendanceChange(data.attendanceLog[1], '-')}
+				date={attendanceLog[1].date}
+				onpresent={() => handleAttendanceChange(attendanceLog[1], 'Present')}
+				onabsent={() => handleAttendanceChange(attendanceLog[1], 'Absent')}
+				onunmark={() => handleAttendanceChange(attendanceLog[1], '-')}
 				isToday={false}
-				status={data.attendanceLog[1].status}
+				status={attendanceLog[1].status}
+				pending={attendanceLog[1].pending}
 			/>
 
 		{:else}
 			<!-- hide yesterday card on first day of the semester-->
 			<DayMark
-              date={new Date(+new Date(data.attendanceLog[0].date) - 86_400_000)}
+              date={new Date(+new Date(attendanceLog[0].date) - 86_400_000)}
               isToday={false}
               inert
               class="opacity-40 grayscale"
@@ -130,23 +215,20 @@
 
 	<AttendanceLog
 		bind:open={attendanceOpen}
-		entries={data.attendanceLog}
-		errormsg={errors.attendance}
+		entries={attendanceLog}
 		onchange={handleAttendanceChange}
 	/>
 	<ExtraLog
 		bind:open={extraOpen}
-		entries={data.extra}
-		errormsg={errors.extra}
-		ondelete={(entry) => callAction('de', { id: entry.id }, 'extra')}
-		onadd={(fields) => callAction('ae', fields, 'extra')}
+		entries={extra}
+		ondelete={(entry) => submit('de', { id: entry.id })}
+		onadd={(fields) => submit('ae', fields)}
 	/>
 	<LeaveLog
 		bind:open={leavesOpen}
-		entries={data.leave}
-		errormsg={errors.leave}
-		ondelete={(entry) => callAction('dl', { id: entry.id }, 'leave')}
-		onadd={(fields) => callAction('al', fields, 'leave')}
+		entries={leave}
+		ondelete={(entry) => submit('dl', { id: entry.id })}
+		onadd={(fields) => submit('al', fields)}
 	/>
 	<BugReport
 		bind:open={bugOpen}
@@ -158,6 +240,25 @@
 		errormsg={errors.feedback}
 		onsubmit={(fields) => callAction('fb', fields, 'feedback')}
 	/>
+
+	<AlertDialog.Root
+		open={failure !== null}
+		onOpenChange={(isOpen) => {
+			if (!isOpen) failure = null;
+		}}
+	>
+		<AlertDialog.Content>
+			<AlertDialog.Header>
+				<AlertDialog.Title>That change didn't save</AlertDialog.Title>
+				<AlertDialog.Description class="wrap-anywhere">{failure}</AlertDialog.Description>
+			</AlertDialog.Header>
+			<AlertDialog.Footer>
+				<AlertDialog.Action class="cursor-pointer" onclick={() => (failure = null)}>
+					OK
+				</AlertDialog.Action>
+			</AlertDialog.Footer>
+		</AlertDialog.Content>
+	</AlertDialog.Root>
 
 	<div class="grid grid-cols-3 gap-4">
 		<VEBtn icon={calendarUrl} text="Attendance" onclick={() => (attendanceOpen = true)} />
