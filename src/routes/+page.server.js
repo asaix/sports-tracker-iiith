@@ -1,7 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 
-const MALE_REQUIREMENT = 34;
-const FEMALE_REQUIREMENT = 32;
+const MALE_REQUIREMENT = 32;
+const FEMALE_REQUIREMENT = 30;
 
 const dayKey = (d) =>
 	`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
